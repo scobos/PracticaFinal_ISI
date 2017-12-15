@@ -1,7 +1,13 @@
 language: java
 notifications:
-   email:
-      - s.cobosm@alumnos.urjc.es
-      - s.olivam@alumnos.urjc.es
-      - seryii.96@gmail.com
-      - r.pachecom@alumnos.urjc.es
+  email:
+  - s.cobosm@alumnos.urjc.es
+  - s.olivam@alumnos.urjc.es
+  - seryii.96@gmail.com
+  - r.pachecom@alumnos.urjc.es
+deploy:
+  skip_cleanup: true
+  provider: heroku
+  app: practicafinalisi
+  api_key:
+    secure: kQXL0uS4gEFnN7AXt15nrWwqUy21WKkNih2HgXShuZhdWJwYaIdfWAB7PtIhaEhubxBGSb6CsQvMmpZlOzT5ZObQsMTsm/fSiE01J8fhRREMfhzNU3Wjw7a673nNXHbZ8/QdXKzdluOa+Pbxl5TyK5++61JkQbICM2DGjbU9WxXbosfua/WenpRXId+qyBIBShrpCvhML+pOAgb0LoRpr4tNm4Mv1JN8OHhmoYYwLC6dKilMpKAe50oWZHy1Cmt63tBZhgPTV52NHoHxzcwIGz958EI8/Do+KDzl5fr8PfEFYFE9aSTACaTRq8vJwAjWqPfxOjPc5GGWXYVDjGclMJtkx0cN3Pl5IZ7p30kL2FQ/jXP6tf6qExAagAwMyWfzJ3R6Z90t3zH8SMLb3BMEqPuPtjog1XGJcgM8pWADyRQjlufOznnHKJykYvNf0Tbuvak8K0x+GNTUKZx0+wqccOWO/cN2EgRjZuCjlGZSpnlutqGLqscvKxebW/RYqY0D2iwHAA+RuOqnPL4Ezxze+AbA6Lh573sQu+vt9WD6Fa7oiFIuiBh6QE+INREXU3KK0asVgybgBhlqlsF6aY9+SAH1YZvOEpF/dydpMHSY/3SQD+ypkKt1G1mLdnfkpjaBzXChgwY7tOYC/X5UjjgbqbCWvREXfK64Tyybioh7iO8=
