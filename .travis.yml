@@ -1,0 +1,7 @@
+language: java
+notifications:
+   email:
+      - s.cobosm@alumnos.urjc.es
+      - s.olivam@alumnos.urjc.es
+      - seryii.96@gmail.com
+      - r.pachecom@alumnos.urjc.es
