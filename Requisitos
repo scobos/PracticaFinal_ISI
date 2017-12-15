@@ -4,8 +4,8 @@ Existen dos bloques de código a desarrollar, uno de ellos será la API web que 
 
 API
 	La API se desplegará en Heroku y funcionará de la siguiente manera:
-		La intención inicial es que haya un recurso principal en el que se encontrará representado el grafo de películas y un formulario con las 			distintas funcionalidades de nuestra aplicación.
-		Una vez formulado un Request por el usuario, la API adaptará esta propuesta a un formato entendible en un primer instante por la base de 			datos. Si la información no se encontrase precargada aquí, preguntaría al algoritmo (aún no conocemos como debe ser esta información) 		que lo calcularía y finalmente mostraría por pantalla en otro recurso.
+		La intención inicial es que haya un recurso principal en el que se encontrará representado el grafo de películas y un formulario con las distintas funcionalidades de nuestra aplicación.
+		Una vez formulado un Request por el usuario, la API adaptará esta propuesta a un formato entendible en un primer instante por la base de datos. Si la información no se encontrase precargada aquí, preguntaría al algoritmo (aún no conocemos como debe ser esta información) 	que lo calcularía y finalmente mostraría por pantalla en otro recurso.
 BBDD
 		La BBDD se desarrollará con sqlite (probablemente mediante JDBC). En primer lugar se hará un diseño conceptual en base a la    funcionalidad que se ofrezca al usuario (opciones de la API front-end):
 			El primer paso será llenar la base de datos con las Querys que disminuirá el tiempo de acceso a la información (puesto que no conocemos el algoritmo, decidiremos el tamaño de este en base al funcionamiento del algoritmo).
