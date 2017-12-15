@@ -1,0 +1,20 @@
+Estos requisitos están pensados sin conocer el funcionamiento exacto del algoritmo entregado por el cliente.
+Todo el software que desarrollemos se hará bajo integración y desarrollo continuo (GitHub, Travis, Heroku) y bajo las premisas del TDD utilizando para ello Mocks y PIT.
+Existen dos bloques de código a desarrollar, uno de ellos será la API web que actuará como intermediaria entre el usuario y la parte prográmatica; y la otra la base de datos (cargada previamente) que contiene un conjunto de Querys precalculadas (en base a decisiones humanas como cuál es el actor con más películas, las películas en las que actúan más actores...) cuya finalidad será disminuir el tiempo de respuesta al usuario.
+
+API
+	La API se desplegará en Heroku y funcionará de la siguiente manera:
+		La intención inicial es que haya un recurso principal en el que se encontrará representado el grafo de películas y un formulario con las 			distintas funcionalidades de nuestra aplicación.
+		Una vez formulado un Request por el usuario, la API adaptará esta propuesta a un formato entendible en un primer instante por la base de 			datos. Si la información no se encontrase precargada aquí, preguntaría al algoritmo (aún no conocemos como debe ser esta información) 		que lo calcularía y finalmente mostraría por pantalla en otro recurso.
+BBDD
+		La BBDD se desarrollará con sqlite (probablemente mediante JDBC). En primer lugar se hará un diseño conceptual en base a la    funcionalidad que se ofrezca al usuario (opciones de la API front-end):
+			El primer paso será llenar la base de datos con las Querys que disminuirá el tiempo de acceso a la información (puesto que no conocemos el algoritmo, decidiremos el tamaño de este en base al funcionamiento del algoritmo).
+
+La funcionalidad preliminar ofrecida al usuario (aún no conocemos exactamente el contenido de la información) será:
+	En qué películas sale un determinado actor.
+	Qué actores salen en determinada película.
+	Categorías a las que pertenece una película.
+	Todas las películas de una determinada categoría.
+	Distancia entre actores (entre nodos).
+Como funcionalidad opcional se podría ofrecer también todos los actores de una categoría y a que categorías pertenece un actor.
+
