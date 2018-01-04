@@ -46,6 +46,6 @@ public class AppTest {
 	//Happy path
 	@Test()
     public void TestdistanceActors4() {
-        assertEquals(2, Main.distanceBetweenElements(graph, actor1, actor2));
+        assertEquals("Actor A -> Movie 1 -> Actor B<br>Distancia: 2", Main.distanceBetweenElements(graph, actor1, actor2));
     }
 }

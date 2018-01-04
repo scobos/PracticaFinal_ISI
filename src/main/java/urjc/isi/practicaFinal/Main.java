@@ -9,8 +9,21 @@ import java.net.URISyntaxException;
 
 public class Main {
 	
-	public static int distanceBetweenElements(Graph graph,String element1,String element2) {
-		return 0;
+	public static String distanceBetweenElements(Graph graph,String element1,String element2) {
+    	if (element1 == null || element2 == null || graph.V() == 0) {
+    		throw new NullPointerException("Element null");
+    	}
+    	
+    	String ruta = new String("");
+    	PathFinder pf = new PathFinder(graph, element1);
+        for (String v : pf.pathTo(element2)) {
+            ruta += v + " -> ";
+        }        
+        char[] ruta1 = ruta.toCharArray();
+        String result = new String(ruta1, 0, ruta1.length-4);
+        
+        result += "<br>Distancia: " + pf.distanceTo(element2);
+    	return result;
     }
   
     public static String doWork(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
