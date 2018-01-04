@@ -8,6 +8,10 @@ import spark.Response;
 import java.net.URISyntaxException;
 
 public class Main {
+	
+	public static int distanceBetweenElements(Graph graph,String element1,String element2) {
+		return 0;
+    }
   
     public static String doWork(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 	String result = new String("Hello World");
