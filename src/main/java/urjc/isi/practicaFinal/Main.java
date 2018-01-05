@@ -25,7 +25,26 @@ public class Main {
         result += "<br>Distancia: " + pf.distanceTo(element2);
     	return result;
     }
-  
+
+    //Método que devuelve que actor está en qué peliculas y viceversa
+    public static String AInB(Graph graph, String actor) {
+    	if (actor == null) {
+    		throw new NullPointerException("Categorie null");
+    	}
+        String movies = "";
+        StringBuilder s = new StringBuilder();
+        for (String v : graph.st) {
+        	if(v.contains(actor)) {
+        		 s.append(v + ": ");
+                 for (String w : graph.st.get(v)) {
+                     s.append(w + " ");
+                     movies += w + "<br>";
+                 }
+                 s.append('\n');
+        	}
+        }
+        return movies;
+    }
     public static String doWork(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 	String result = new String("Hello World");
 
