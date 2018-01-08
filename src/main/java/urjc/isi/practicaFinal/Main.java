@@ -57,7 +57,7 @@ public class Main {
 	    	In in;
 	    	try {
 	    		for (int i = 0; i < docs.length; i++) {
-	    			in = new In("resources/data/imdb-data/" +docs[i]);
+	    			in = new In("data/imdb-data/" +docs[i]);
 	    			String bodyDoc = in.readAll();				    	//Leo todo el documento
 	    			if(bodyDoc.contains(movie)) {						//Si el documento contiene la línea añado la categoría
 	    				categories = categories + docs[i];				//Cambiar por concat, Habia ERROR.
@@ -65,6 +65,7 @@ public class Main {
 	    		}
 	    	}catch(IllegalArgumentException e) {
 	    		System.out.println(e);
+	    		throw new IllegalArgumentException();
 	    	}
 	    	categories = categories.replace("./cast.", " ");
 	    	categories = categories.replace(".txt", "");			//Me quedo solo con las categorías
