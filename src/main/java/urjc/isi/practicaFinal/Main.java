@@ -47,8 +47,30 @@ public class Main {
     }
     
     public static String categoriesOf(String movie) {
-    		return "";
-    }
+	    	if (movie == null) {
+	    		throw new NullPointerException("Movie null");
+	    	}
+	    	String[] docs = {"./cast.00-06.txt", "./cast.06.txt", "./cast.action.txt",
+	    			"./cast.all.txt", "./cast.G.txt", "./cast.mpaa.txt", "./cast.PG.txt",
+	    			"./cast.PG13.txt",};
+	    	String categories = "";
+	    	In in;
+	    	try {
+	    		for (int i = 0; i < docs.length; i++) {
+	    			in = new In("resources/data/imdb-data/" +docs[i]);
+	    			String bodyDoc = in.readAll();				    	//Leo todo el documento
+	    			if(bodyDoc.contains(movie)) {						//Si el documento contiene la línea añado la categoría
+	    				categories = categories + docs[i];				//Cambiar por concat, Habia ERROR.
+	    			}
+	    		}
+	    	}catch(IllegalArgumentException e) {
+	    		System.out.println(e);
+	    	}
+	    	categories = categories.replace("./cast.", " ");
+	    	categories = categories.replace(".txt", "");			//Me quedo solo con las categorías
+	    	return categories;
+	  
+	}
     
     
     public static String doWork(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
