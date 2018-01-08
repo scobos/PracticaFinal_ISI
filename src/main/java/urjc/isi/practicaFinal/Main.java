@@ -45,6 +45,12 @@ public class Main {
         }
         return movies;
     }
+    
+    public static String categoriesOf(String movie) {
+    		return "";
+    }
+    
+    
     public static String doWork(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 	String result = new String("Hello World");
 
@@ -66,4 +72,6 @@ public class Main {
         }
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
+    
+    	
 }

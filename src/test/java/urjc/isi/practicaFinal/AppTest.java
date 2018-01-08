@@ -1,7 +1,12 @@
 package urjc.isi.practicaFinal;
 
 import static org.junit.Assert.*;
+
+import java.io.File;
 import org.junit.*;
+
+
+
 
 public class AppTest {
 	
@@ -19,6 +24,18 @@ public class AppTest {
 		actor2 = "Actor B";
 		movie = "100 kilos de plomo (2002)";
 		category = "action";
+	}
+	
+	@After public void restaurarFichero()
+	{
+		File fich = new File("data/cast.G.txt");
+		File fich2 = new File("data/imdb-data/cast.G.txt");
+		if ( !fich2. exists() && fich.exists()) {
+			boolean success = fich.renameTo(fich2);
+			if(!success) {
+				System.out.println("Error intentando mover el fichero2");
+			}
+		}
 	}
 	
 	//Uno de los actores es null
@@ -70,4 +87,32 @@ public class AppTest {
 		String answer = "Movie 1<br>Movie 3<br>";
 		assertEquals(answer, Main.AInB(graph, actor1));
     }
+	
+	//El nombre de la película es null
+	@Test(expected=NullPointerException.class)
+	public void testCategoriesOf1() {
+		movie = null;
+	    Main.categoriesOf(movie);
+	}
+
+	//Error al abrir alguno de los ficheros
+	@Test(expected=IllegalArgumentException.class)
+	public void testCategoriesOf2() {
+		File fich = new File("data/imdb-data/cast.G.txt");
+		File fich2 = new File("data/cast.G.txt");
+		boolean success = fich.renameTo(fich2);
+		if (!success) {
+			System.out.println("Error intentando mover el fichero2");
+		}
+		Main.categoriesOf(movie);
+	}
+
+	//Happy Path
+	@Test()
+	public void testCategoriesOf3() {
+		String answer = " 00-06 action all";
+		assertEquals(answer, Main.categoriesOf(movie));
+	}
+		
+		
 }
