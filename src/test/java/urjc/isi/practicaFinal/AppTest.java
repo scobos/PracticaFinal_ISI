@@ -2,10 +2,12 @@ package urjc.isi.practicaFinal;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.junit.*;
-
-
 
 
 public class AppTest {
@@ -113,6 +115,35 @@ public class AppTest {
 		String answer = " 00-06 action all";
 		assertEquals(answer, Main.categoriesOf(movie));
 	}
+	
+	//La categoría es null
+		@Test(expected=NullPointerException.class)
+	    public void MoviesOfCategory1() {
+			category = null;
+			Main.MoviesOfCategorie(category);
+	    }
+		
+		//La categoría no coincide con las posibles
+		@Test(expected=IllegalArgumentException.class)
+	    public void MoviesOfCategory2() {
+			category = " Categoria Inventada";
+			Main.MoviesOfCategorie(category);
+	    }
+		
+		//Happy path
+		@Test()
+	    public void MoviesOfCategory3() throws IOException {
+	        String categorie = "action";
+	        File fichero = new File ("resources/data/other-data/action_movies.txt");
+	        BufferedWriter bw;
+	        bw = new BufferedWriter(new FileWriter(fichero)); 
+	        bw.write(Main.MoviesOfCategorie(categorie)); //Escribo en el fichero el contenido del método
+	        bw.close(); 
+	        In in;
+	        in = new In("resources/data/other-data/action_movies.txt");
+			String bodyDoc = in.readAll();	//para poder comparar el contenido del fichero con la salida del método
+			assertEquals(bodyDoc, Main.MoviesOfCategorie(categorie));
+	    }
 		
 		
 }

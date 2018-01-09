@@ -73,6 +73,10 @@ public class Main {
 	  
 	}
     
+    public static String MoviesOfCategorie(String categorie) {
+	    return "";
+    }
+    
     
     public static String doWork(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 	String result = new String("Hello World");
@@ -81,6 +85,10 @@ public class Main {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
+    		StdOut.println("######Peliculas de acción#####");
+        String categorie = "action";
+        String movies = Main.MoviesOfCategorie(categorie);					//Tarda muchísimo.
+        StdOut.println(movies);
         port(getHerokuAssignedPort());
 
         // spark server
