@@ -74,7 +74,25 @@ public class Main {
 	}
     
     public static String MoviesOfCategorie(String categorie) {
-	    return "";
+	    	if (categorie == null) {
+				throw new NullPointerException("Categorie null");
+		}
+	    In in;
+	    String movies = "";
+	    try {
+	    	String path = "resources/data/imdb-data/cast." + categorie + ".txt";
+	        in = new In(path);
+	        while (!in.isEmpty()) {
+	            String line = in.readLine();				    	//Leo linea a linea (cada linea es una película)
+	            String[] parts = line.split("/");					//Hago un split hasta la primera /
+	            movies = movies + (parts[0]) + "<br>";					//Concateno todas las películas
+	        }
+	    }
+	    catch (IllegalArgumentException e) {
+	        System.out.println(e);
+				throw new IllegalArgumentException("Error al abrir el archivo");
+	    }
+	    return movies;
     }
     
     
