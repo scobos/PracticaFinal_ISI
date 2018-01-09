@@ -80,7 +80,7 @@ public class Main {
 	    In in;
 	    String movies = "";
 	    try {
-	    	String path = "resources/data/imdb-data/cast." + categorie + ".txt";
+	    	String path = "data/imdb-data/cast." + categorie + ".txt";
 	        in = new In(path);
 	        while (!in.isEmpty()) {
 	            String line = in.readLine();				    	//Leo linea a linea (cada linea es una película)

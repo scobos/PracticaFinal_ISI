@@ -1,7 +1,10 @@
 package urjc.isi.practicaFinal;
 
 import static org.junit.Assert.*;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.junit.*;
@@ -131,8 +134,13 @@ public class AppTest {
 		@Test()
 	    public void MoviesOfCategory3() throws IOException {
 	        String categorie = "action";
+	        File fichero = new File ("data/other-data/action_movies.txt");
+	        BufferedWriter bw;
+	        bw = new BufferedWriter(new FileWriter(fichero)); 
+	        bw.write(Main.MoviesOfCategorie(categorie)); //Escribo en el fichero el contenido del método
+	        bw.close(); 
 	        In in;
-	        in = new In("resources/data/other-data/action_movies.txt");
+	        in = new In("data/other-data/action_movies.txt");
 			String bodyDoc = in.readAll();	//para poder comparar el contenido del fichero con la salida del método
 			assertEquals(bodyDoc, Main.MoviesOfCategorie(categorie));
 	    }
