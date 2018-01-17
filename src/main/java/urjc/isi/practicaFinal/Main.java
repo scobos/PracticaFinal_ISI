@@ -90,6 +90,7 @@ public class Main {
         	}
         }catch(IllegalArgumentException e) {
             System.out.println(e);
+            throw new IllegalArgumentException();
         }
     	return categories;
     }
