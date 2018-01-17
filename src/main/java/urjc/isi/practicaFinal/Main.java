@@ -129,6 +129,21 @@ public class Main {
     	return movies;
     }
     
+    public static String doDistance(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String filePath = "data/other-data/tinyMovies.txt";
+    	String delimiter = "/";
+    	Graph graph = new Graph(filePath, delimiter);
+    	String body = request.body();
+    	String[] elements = body.split("&");
+    	String[] elements1 = elements[0].split("=");
+    	String actor1 = elements1[1].replace("+", " ");
+    	String[] elements2 = elements[1].split("=");
+    	String actor2 = elements2[1].replace("+", " ");
+    	String movies = "";
+    	movies = distanceBetweenElements(graph, actor1, actor2);
+    	return movies;
+    }
+    
     
     public static String FormularyAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
     	String body = "<form action='/AInB' method='post'>" +
@@ -143,7 +158,22 @@ public class Main {
     	return body;
     }
     
-    
+    public static String FormularyDistanceBetweenElements(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String body = "<form action='/DistanceBetweenElements' method='post'>" +
+        	"<div>" + 
+            	"<label for='name'>Actor o película: </label>" +
+            	"<input type='text' id='name' name='Element1'/>" +
+            "</div>" +
+        	"<div>" + 
+        	"<label for='name'>Actor o película: </label>" +
+        		"<input type='text' id='name' name='Element2'/>" +
+        	"</div>" +
+        	"<div class='button'>" +
+            	"<button type='submit'>Calcular</button>" +
+            "</div>" +
+        "</form>";
+    	return body;
+    }
     
     
     
@@ -176,8 +206,14 @@ public class Main {
 				"<button type='submit'>Películas de categoría</button>" +
 			"</div>" +
 		"</form>");
+    	
     	post("/FormularyAInB", Main::FormularyAinB);
+    	post("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
+
     	post("/AInB", Main::doAinB);
+    	post("/DistanceBetweenElements", Main::doDistance);
+    	
+    	
     }
 
     static int getHerokuAssignedPort() {

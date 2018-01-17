@@ -112,7 +112,7 @@ public class AppTest {
 	//Happy Path
 	@Test()
 	public void testCategoriesOf3() {
-		String answer = " 00-06 action all";
+		String answer = "Movies release since 2000<br>Action Movies<br>Over 250,000 movies<br>";
 		assertEquals(answer, Main.categoriesOf(movie));
 	}
 	
