@@ -8,7 +8,7 @@ import spark.Response;
 import java.net.URISyntaxException;
 
 
-public class Main {
+public class MainWeb {
 	
 	public static String distanceBetweenElements(Graph graph,String element1,String element2) {
     	if (element1 == null || element2 == null || graph.V() == 0) {
@@ -117,10 +117,121 @@ public class Main {
         return movies;
     }
     
-        
+    public static String doDistance(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String filePath = "data/other-data/tinyMovies.txt";
+    	String delimiter = "/";
+    	Graph graph = new Graph(filePath, delimiter);
+    	String body = request.body();
+    	String[] elements = body.split("&");
+    	String[] elements1 = elements[0].split("=");
+    	String actor1 = elements1[1].replace("+", " ");
+    	String[] elements2 = elements[1].split("=");
+    	String actor2 = elements2[1].replace("+", " ");
+    	String movies = "";
+    	movies = distanceBetweenElements(graph, actor1, actor2);
+    	return movies;
+    }
+    
+    public static String doAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String filePath = "data/other-data/tinyMovies.txt";
+    	String delimiter = "/";
+    	Graph graph = new Graph(filePath, delimiter);
+    	String body = request.body();
+    	String[] element1 = body.split("=");
+    	String actor1 = element1[1].replace("+", " ");
+    	String movies = "";
+    	movies = AInB(graph, actor1);
+    	return movies;
+    }
+    
+    
+    public static String doCategoriesOf(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String body = request.body();
+    	String[] elements = body.split("=");
+    	String element1 = elements[1].replace("+", " ");
+    	String movies = "";
+    	movies = categoriesOf(element1);
+    	return movies;
+    }
+    
+    //TODO Los carácteres especiales salen de distinta forma, cambiar todos a lo bruto??
+    public static String doOfCategories(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String body = request.body();
+    	String[] elements = body.split("=");
+    	String element1 = elements[1].replace("+", " ");
+    	String movies = "";
+    	movies = MoviesOfCategorie(element1);
+    	return movies;
+    }
+    
+    public static String FormularyAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String body = "<form action='/AInB' method='post'>" +
+        	"<div>" + 
+            	"<label for='name'>Actor o película: </label>" +
+            	"<input type='text' id='name' name='Element1'/>" +
+            "</div>" +
+        	"<div class='button'>" +
+            	"<button type='submit'>Buscar</button>" +
+            "</div>" +
+        "</form>";
+    	return body;
+    }
+    
+    public static String FormularyDistanceBetweenElements(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String body = "<form action='/DistanceBetweenElements' method='post'>" +
+        	"<div>" + 
+            	"<label for='name'>Actor o película: </label>" +
+            	"<input type='text' id='name' name='Element1'/>" +
+            "</div>" +
+        	"<div>" + 
+        	"<label for='name'>Actor o película: </label>" +
+        		"<input type='text' id='name' name='Element2'/>" +
+        	"</div>" +
+        	"<div class='button'>" +
+            	"<button type='submit'>Calcular</button>" +
+            "</div>" +
+        "</form>";
+    	return body;
+    }
+    
+    public static String FormularyOfCategories(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String body = "<form action='/OfCategories' method='post'>" +
+    		"<div>" + 
+    			"<select name='Categoria'>\n\t<option selected value='0'>Elige categoría</option>" +
+    			"<option value=00-06>Movies released since 2000</option>" +
+    			"<option value=06>Movies release in 2006</option>" +
+    			"<option value=G>Movies rated G by MPAA</option>" +
+    			"<option value=PG>Movies rated PG by MPAA</option>" +
+    			"<option value=PG13>Movies rated PG13 by MPAA</option>" +
+    			"<option value=mpaa>Movies rated by MPAA</option>" +
+    			"<option value=action>Action Movies</option>" +
+    			"<option value=rated>Popular Movies</option>" +
+    			"<option value=all>Over 250,000 movies</option>" +
+    			"</select><input class='button' type='submit' value='Buscar'>"+
+    		"</div>" +
+    	"</form>";
+    	return body;
+    }
+    
+    public static String FormularyCategoriesOf(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String body = "<form action='/CategoriesOf' method='post'>" +
+        	"<div>" + 
+            	"<label for='name'>Película: </label>" +
+            	"<input type='text' id='name' name='Movie'/>" +
+            "</div>" +
+        	"<div class='button'>" +
+            	"<button type='submit'>Buscar</button>" +
+            "</div>" +
+        "</form>";
+    	return body;
+    }
+    
+
     public static void main(String[] args) throws ClassNotFoundException {
         port(getHerokuAssignedPort());
-        staticFileLocation("/public");        
+        staticFileLocation("/public");
+        
+        
     	get("/", (req, res) ->
     	"<form action='/FormularyAInB' method='post'>" +
     		"<div class='button'>Puedes elegir entre las siguientes opciones:<br/><br/>" +
@@ -146,6 +257,17 @@ public class Main {
 				"<button type='submit'>Películas de categoría</button>" +
 			"</div>" +
 		"</form>");
+    	
+    	post("/FormularyAInB", MainWeb::FormularyAinB);
+    	post("/FormularyDistanceBetweenElements", MainWeb::FormularyDistanceBetweenElements);
+    	post("/FormularyCategoriesOf", MainWeb::FormularyCategoriesOf);
+    	post("/FormularyOfCategories", MainWeb::FormularyOfCategories);
+    	
+    	post("/AInB", MainWeb::doAinB);
+    	post("/DistanceBetweenElements", MainWeb::doDistance);
+    	post("/CategoriesOf", MainWeb::doCategoriesOf);
+    	post("/OfCategories", MainWeb::doOfCategories); 
+        
     }
 
     static int getHerokuAssignedPort() {
