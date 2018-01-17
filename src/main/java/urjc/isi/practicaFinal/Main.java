@@ -117,6 +117,36 @@ public class Main {
         return movies;
     }
     
+    public static String doAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String filePath = "data/other-data/tinyMovies.txt";
+    	String delimiter = "/";
+    	Graph graph = new Graph(filePath, delimiter);
+    	String body = request.body();
+    	String[] element1 = body.split("=");
+    	String actor1 = element1[1].replace("+", " ");
+    	String movies = "";
+    	movies = AInB(graph, actor1);
+    	return movies;
+    }
+    
+    
+    public static String FormularyAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String body = "<form action='/AInB' method='post'>" +
+        	"<div>" + 
+            	"<label for='name'>Actor o película: </label>" +
+            	"<input type='text' id='name' name='Element1'/>" +
+            "</div>" +
+        	"<div class='button'>" +
+            	"<button type='submit'>Buscar</button>" +
+            "</div>" +
+        "</form>";
+    	return body;
+    }
+    
+    
+    
+    
+    
         
     public static void main(String[] args) throws ClassNotFoundException {
         port(getHerokuAssignedPort());
@@ -146,6 +176,8 @@ public class Main {
 				"<button type='submit'>Películas de categoría</button>" +
 			"</div>" +
 		"</form>");
+    	post("/FormularyAInB", Main::FormularyAinB);
+    	post("/AInB", Main::doAinB);
     }
 
     static int getHerokuAssignedPort() {
