@@ -5,6 +5,7 @@ notifications:
   - s.olivam@alumnos.urjc.es
   - seryii.96@gmail.com
   - r.pachecom@alumnos.urjc.es
+  - pedro.delasheras@urjc.es
 deploy:
   skip_cleanup: true
   provider: heroku
