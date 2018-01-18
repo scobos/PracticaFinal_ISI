@@ -121,45 +121,31 @@ public class Main {
 		String filePath = "data/other-data/tinyMovies.txt";
 		String delimiter = "/";
 		Graph graph = new Graph(filePath, delimiter);
-		String body = request.body();
-		String[] element1 = body.split("=");
-		String actor1 = element1[1].replace("+", " ");
-		String movies = "";
-		movies = AInB(graph, actor1);
-		return movies;
+		String element = request.queryParams("Element1");
+		String result = AInB(graph, element);
+		return result;
 	}
 
 	public static String doDistance(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String filePath = "data/other-data/tinyMovies.txt";
 		String delimiter = "/";
 		Graph graph = new Graph(filePath, delimiter);
-		String body = request.body();
-		String[] elements = body.split("&");
-		String[] elements1 = elements[0].split("=");
-		String actor1 = elements1[1].replace("+", " ");
-		String[] elements2 = elements[1].split("=");
-		String actor2 = elements2[1].replace("+", " ");
-		String movies = "";
-		movies = distanceBetweenElements(graph, actor1, actor2);
-		return movies;
+		String element1 = request.queryParams("Element1");
+		String element2 = request.queryParams("Element2");
+		String distance = distanceBetweenElements(graph, element1, element2);
+		return distance;
 	}
 
 	public static String doOfCategories(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
-		String body = request.body();
-		String[] elements = body.split("=");
-		String element1 = elements[1].replace("+", " ");
-		String movies = "";
-		movies = MoviesOfCategorie(element1);
+		String category = request.queryParams("Categoria");
+		String movies = MoviesOfCategorie(category);
 		return movies;
 	}
 
 	public static String doCategoriesOf(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
-		String body = request.body();
-		String[] elements = body.split("=");
-		String element1 = elements[1].replace("+", " ");
-		String movies = "";
-		movies = categoriesOf(element1);
-		return movies;
+    	String movie = request.queryParams("Movie");  
+    	String category = categoriesOf(movie);
+    	return category;
 	}
 
 	public static String FormularyAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
