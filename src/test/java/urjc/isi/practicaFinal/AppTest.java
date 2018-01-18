@@ -115,28 +115,26 @@ public class AppTest {
 	}
 	
 	//La categoría es null
-		@Test(expected=NullPointerException.class)
-	    public void MoviesOfCategory1() {
-			category = null;
-			Main.MoviesOfCategorie(category);
-	    }
-		
-		//La categoría no coincide con las posibles
-		@Test(expected=IllegalArgumentException.class)
-	    public void MoviesOfCategory2() {
-			category = " Categoria Inventada";
-			Main.MoviesOfCategorie(category);
-	    }
-		
-		//Happy path
-		@Test()
-	    public void MoviesOfCategory3() throws IOException {
-	        String categorie = "action";
-	        In in;
-	        in = new In("data/other-data/action_movies.txt");
-			String bodyDoc = in.readAll();	//para poder comparar el contenido del fichero con la salida del método
-			assertEquals(bodyDoc, Main.MoviesOfCategorie(categorie));
-	    }
-		
-		
+	@Test(expected=NullPointerException.class)
+	public void MoviesOfCategory1() {
+		category = null;
+		Main.MoviesOfCategorie(category);
+	}
+
+	//La categoría no coincide con las posibles
+	@Test(expected=IllegalArgumentException.class)
+	public void MoviesOfCategory2() {
+		category = " Categoria Inventada";
+		Main.MoviesOfCategorie(category);
+	}
+
+	//Happy path
+	@Test()
+	public void MoviesOfCategory3() throws IOException {
+		String categorie = "action";
+		In in;
+		in = new In("data/other-data/action_movies.txt");
+		String bodyDoc = in.readAll();	//para poder comparar el contenido del fichero con la salida del método
+		assertEquals(bodyDoc, Main.MoviesOfCategorie(categorie));
+	}
 }
