@@ -118,7 +118,7 @@ public class Main {
 	}
 
 	public static String doAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
-		String filePath = "data/other-data/tinyMovies.txt";
+		String filePath = "data/imdb-data/cast.all.txt";
 		String delimiter = "/";
 		Graph graph = new Graph(filePath, delimiter);
 		String element = request.queryParams("Element1");
@@ -127,7 +127,7 @@ public class Main {
 	}
 
 	public static String doDistance(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
-		String filePath = "data/other-data/tinyMovies.txt";
+		String filePath = "data/imdb-data/cast.all.txt";
 		String delimiter = "/";
 		Graph graph = new Graph(filePath, delimiter);
 		String element1 = request.queryParams("Element1");
@@ -150,63 +150,63 @@ public class Main {
 
 	public static String FormularyAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String body = "<form action='/AInB' method='post'>" +
-				"<div>" + 
-				"<label for='name'>Actor o película: </label>" +
-				"<input type='text' id='name' name='Element1'/>" +
-				"</div>" +
-				"<div class='button'>" +
-				"<button type='submit'>Buscar</button>" +
-				"</div>" +
-				"</form>";
+					  	   "<div>" + 
+					  	   		"<label for='name'>Actor o película: </label>" +
+					  	   		"<input type='text' id='name' name='Element1'/>" +
+					  	   	"</div>" +
+					  	   	"<div class='button'>" +
+					  	   		"<button type='submit'>Buscar</button>" +
+					  	   	"</div>" +
+					  "</form>";
 		return body;
 	}
 
 	public static String FormularyDistanceBetweenElements(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String body = "<form action='/DistanceBetweenElements' method='post'>" +
-				"<div>" + 
-				"<label for='name'>Actor o película: </label>" +
-				"<input type='text' id='name' name='Element1'/>" +
-				"</div>" +
-				"<div>" + 
-				"<label for='name'>Actor o película: </label>" +
-				"<input type='text' id='name' name='Element2'/>" +
-				"</div>" +
-				"<div class='button'>" +
-				"<button type='submit'>Calcular</button>" +
-				"</div>" +
-				"</form>";
+					  	  "<div>" + 
+					  	  	  "<label for='name'>Actor o película: </label>" +
+					  	  	  "<input type='text' id='name' name='Element1'/>" +
+					  	  "</div>" +
+					  	  "<div>" + 
+					  	  	  "<label for='name'>Actor o película: </label>" +
+					  	  	  "<input type='text' id='name' name='Element2'/>" +
+					  	  "</div>" +
+					  	  "<div class='button'>" +
+					  	  	  "<button type='submit'>Calcular</button>" +
+					  	  "</div>" +
+					  "</form>";
 		return body;
 	}
 
 	public static String FormularyOfCategories(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String body = "<form action='/OfCategories' method='post'>" +
-				"<div>" + 
-				"<select name='Categoria'>\n\t<option selected value='0'>Elige categoría</option>" +
-				"<option value=00-06>Movies released since 2000</option>" +
-				"<option value=06>Movies release in 2006</option>" +
-				"<option value=G>Movies rated G by MPAA</option>" +
-				"<option value=PG>Movies rated PG by MPAA</option>" +
-				"<option value=PG13>Movies rated PG13 by MPAA</option>" +
-				"<option value=mpaa>Movies rated by MPAA</option>" +
-				"<option value=action>Action Movies</option>" +
-				"<option value=rated>Popular Movies</option>" +
-				"<option value=all>Over 250,000 movies</option>" +
-				"</select><input class='button' type='submit' value='Buscar'>"+
-				"</div>" +
-				"</form>";
+						  "<div>" + 
+						  	  "<select name='Categoria'>\n\t<option selected value='0'>Elige categoría</option>" +
+						  	  "<option value=00-06>Movies released since 2000</option>" +
+						  	  "<option value=06>Movies release in 2006</option>" +
+						  	  "<option value=G>Movies rated G by MPAA</option>" +
+						  	  "<option value=PG>Movies rated PG by MPAA</option>" +
+						  	  "<option value=PG13>Movies rated PG13 by MPAA</option>" +
+						  	  "<option value=mpaa>Movies rated by MPAA</option>" +
+						  	  "<option value=action>Action Movies</option>" +
+						  	  "<option value=rated>Popular Movies</option>" +
+						  	  "<option value=all>Over 250,000 movies</option>" +
+						  	  "</select><input class='button' type='submit' value='Buscar'>"+
+						  "</div>" +
+					   "</form>";
 		return body;
 	}
 
 	public static String FormularyCategoriesOf(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String body = "<form action='/CategoriesOf' method='post'>" +
-				"<div>" + 
-				"<label for='name'>Película: </label>" +
-				"<input type='text' id='name' name='Movie'/>" +
-				"</div>" +
-				"<div class='button'>" +
-				"<button type='submit'>Buscar</button>" +
-				"</div>" +
-				"</form>";
+						  "<div>" + 
+						  	  "<label for='name'>Película: </label>" +
+						  	  "<input type='text' id='name' name='Movie'/>" +
+						  "</div>" +
+						  "<div class='button'>" +
+						  	  "<button type='submit'>Buscar</button>" +
+						  "</div>" +
+					  "</form>";
 		return body;
 	}
 
@@ -216,30 +216,35 @@ public class Main {
 		staticFileLocation("/public");        
 		get("/", (req, res) ->
 		"<form action='/FormularyAInB' method='post'>" +
-		"<div class='button'>Puedes elegir entre las siguientes opciones:<br/><br/>" +
-		"-Buscar qué actores salen en una película, o en qué películas sale un actor:<br/>" +
-		"<button type='submit'  class='btn btn-default ribbon'>Actor-Película</button>" +
-		"</div>" +
+			"<div class='button'>Puedes elegir entre las siguientes opciones:<br/><br/>" +
+				"-Buscar qué actores salen en una película, o en qué películas sale un actor:<br/>" +
+				"<button type='submit'  class='btn btn-default ribbon'>Actor-Película</button>" +
+			"</div>" +
 		"</form>" +
 		"<form action='/FormularyDistanceBetweenElements' method='post'>" +
-		"<div class='button'>" +
-		"-Calcular la distancia entre dos elementos (peliculas o actores):<br/>" +
-		"<button type='submit'>Distancia entre elementos</button>" +
-		"</div>" +
+			"<div class='button'>" +
+				"-Calcular la distancia entre dos elementos (peliculas o actores):<br/>" +
+				"<button type='submit'>Distancia entre elementos</button>" +
+			"</div>" +
 		"</form>" +
 		"<form action='/FormularyCategoriesOf' method='post'>" +
-		"<div class='button'>" +
-		"-Buscar categorías de una película: <br/>" +
-		"<button type='submit'>Categorías</button>" +
-		"</div>" +
+			"<div class='button'>" +
+				"-Buscar categorías de una película: <br/>" +
+				"<button type='submit'>Categorías</button>" +
+			"</div>" +
 		"</form>" +
 		"<form action='/FormularyOfCategories' method='post'>" +
-		"<div class='button'>" +
-		"-Buscar películas de una categoría:<br/>" +
-		"<button type='submit'>Películas de categoría</button>" +
-		"</div>" +
-				"</form>");
+			"<div class='button'>" +
+				"-Buscar películas de una categoría:<br/>" +
+				"<button type='submit'>Películas de categoría</button>" +
+			"</div>" +
+		"</form>");
 
+		get("/FormularyAInB", Main::FormularyAinB);
+		get("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
+		get("/FormularyOfCategories", Main::FormularyOfCategories);
+		get("/FormularyCategoriesOf", Main::FormularyCategoriesOf);
+		
 		post("/FormularyAInB", Main::FormularyAinB);
 		post("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
 		post("/FormularyOfCategories", Main::FormularyOfCategories);
