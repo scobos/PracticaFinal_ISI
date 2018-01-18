@@ -4,8 +4,11 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.junit.*;
+import spark.Request;
+import spark.Response;
 
 
 public class AppTest {
@@ -136,5 +139,13 @@ public class AppTest {
 		in = new In("data/other-data/action_movies.txt");
 		String bodyDoc = in.readAll();	//para poder comparar el contenido del fichero con la salida del método
 		assertEquals(bodyDoc, Main.MoviesOfCategorie(categorie));
+	}
+	
+	//Request and Response null
+	@Test(expected= NullPointerException.class)
+	public void doAInB1() throws ClassNotFoundException, URISyntaxException {
+		Request request = null;
+		Response response = null;
+		Main.doAinB(request, response);
 	}
 }
