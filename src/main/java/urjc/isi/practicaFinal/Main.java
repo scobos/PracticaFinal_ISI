@@ -4,7 +4,6 @@ import static spark.Spark.*;
 import spark.Request;
 import spark.Response;
 
-
 import java.net.URISyntaxException;
 
 
@@ -53,8 +52,8 @@ public class Main {
     	}
     	
     	String[] docs = {"./cast.00-06.txt", "./cast.06.txt", "./cast.action.txt",
-    			"./cast.G.txt", "./cast.mpaa.txt", "./cast.PG.txt",
-    			"./cast.PG13.txt", "./cast.all.txt"};
+    					 "./cast.G.txt", "./cast.mpaa.txt", "./cast.PG.txt",
+    					 "./cast.PG13.txt", "cast.rated.txt", "./cast.all.txt"};
         String categories = "";
         String category = new String();
     	In in;
@@ -145,6 +144,14 @@ public class Main {
     	return movies;
     }
     
+    public static String doOfCategories(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String body = request.body();
+    	String[] elements = body.split("=");
+    	String element1 = elements[1].replace("+", " ");
+    	String movies = "";
+    	movies = MoviesOfCategorie(element1);
+    	return movies;
+    }
     
     public static String FormularyAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
     	String body = "<form action='/AInB' method='post'>" +
@@ -176,7 +183,24 @@ public class Main {
     	return body;
     }
     
-    
+    public static String FormularyOfCategories(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
+    	String body = "<form action='/OfCategories' method='post'>" +
+    		"<div>" + 
+    			"<select name='Categoria'>\n\t<option selected value='0'>Elige categoría</option>" +
+    			"<option value=00-06>Movies released since 2000</option>" +
+    			"<option value=06>Movies release in 2006</option>" +
+    			"<option value=G>Movies rated G by MPAA</option>" +
+    			"<option value=PG>Movies rated PG by MPAA</option>" +
+    			"<option value=PG13>Movies rated PG13 by MPAA</option>" +
+    			"<option value=mpaa>Movies rated by MPAA</option>" +
+    			"<option value=action>Action Movies</option>" +
+    			"<option value=rated>Popular Movies</option>" +
+    			"<option value=all>Over 250,000 movies</option>" +
+    			"</select><input class='button' type='submit' value='Buscar'>"+
+    		"</div>" +
+    	"</form>";
+    	return body;
+    }
     
         
     public static void main(String[] args) throws ClassNotFoundException {
@@ -210,10 +234,12 @@ public class Main {
     	
     	post("/FormularyAInB", Main::FormularyAinB);
     	post("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
+    	post("/FormularyOfCategories", Main::FormularyOfCategories);
 
     	post("/AInB", Main::doAinB);
     	post("/DistanceBetweenElements", Main::doDistance);
-    	
+    	post("/OfCategories", Main::doOfCategories); 
+
     	
     }
 
