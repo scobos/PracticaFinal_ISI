@@ -77,10 +77,11 @@ public class AppTest {
     }
 	
 	//El grafo está vacío
-	@Test(expected=IllegalArgumentException.class)
+	@Test()
     public void TestAInB2() {
+		String answer = "No se han encontrado resultados para 'Actor A'";
 		graph = new Graph();
-		Main.AInB(graph, actor1);
+		assertEquals(answer, Main.AInB(graph, actor1));
     }
 	
 	//Happy path

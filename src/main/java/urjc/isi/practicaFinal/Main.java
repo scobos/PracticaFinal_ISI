@@ -31,16 +31,21 @@ public class Main {
 	}
 	
 	//Método que devuelve que actor está en qué peliculas y viceversa
-	public static String AInB(Graph graph, String actor) {
-		if (actor == null) {
+	public static String AInB(Graph graph, String element) {
+		if (element == null) {
 			throw new NullPointerException("Categorie null");
 		}
 		
 		String result = new String("");
-		for (String v:graph.adjacentTo(actor)) {
-			if(graph.st.contains(v)) {
-				result += v + "</br>";
+		try {
+			for (String v:graph.adjacentTo(element)) {
+
+				if(graph.st.contains(v)) {
+					result += v + "</br>";
+				}
 			}
+		}catch (IllegalArgumentException e) {
+			result += "No se han encontrado resultados para '" + element + "'";
 		}
 		return result;
 	}
@@ -118,7 +123,6 @@ public class Main {
 
 	public static String doAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String filePath = "data/imdb-data/cast.all.txt";
-
 		String delimiter = "/";
 		Graph graph = new Graph(filePath, delimiter);
 		String element = request.queryParams("Element1");
