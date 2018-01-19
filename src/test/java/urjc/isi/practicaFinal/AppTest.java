@@ -148,4 +148,32 @@ public class AppTest {
 		Response response = null;
 		Main.doAinB(request, response);
 	}
+	
+	//Request and Response null
+	@Test(expected= NullPointerException.class)
+	public void doDistance1() throws ClassNotFoundException, URISyntaxException {
+		Request request = null;
+		Response response = null;
+		Main.doDistance(request, response);
+	}
+	
+	//Request and Response null
+	@Test(expected= NullPointerException.class)
+	public void doOfCategories1() throws ClassNotFoundException, URISyntaxException {
+		Request request = null;
+		Response response = null;
+		Main.doOfCategories(request, response);
+	}
+	
+	//Request and Response null
+	@Test(expected= NullPointerException.class)
+	public void doCategoriesOf1() throws ClassNotFoundException, URISyntaxException {
+		Request request = null;
+		Response response = null;
+		Main.doCategoriesOf(request, response);
+	}
+	
+	
+	
+	
 }
