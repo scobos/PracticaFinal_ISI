@@ -77,17 +77,16 @@ public class AppTest {
     }
 	
 	//El grafo está vacío
-	@Test()
+	@Test(expected=IllegalArgumentException.class)
     public void TestAInB2() {
-		String answer = "";
 		graph = new Graph();
-		assertEquals(answer, Main.AInB(graph, actor1));
+		Main.AInB(graph, actor1);
     }
 	
 	//Happy path
 	@Test()
     public void TestAInB3() {
-		String answer = "Movie 1<br>Movie 3<br>";
+		String answer = "Movie 1</br>Movie 3</br>";
 		assertEquals(answer, Main.AInB(graph, actor1));
     }
 	
