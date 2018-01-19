@@ -41,7 +41,7 @@ public class AppTest {
 		}
 	}
 	
-	//Uno de los actores es null
+	//Uno de los actores es null, FLUJO--> entramos en la excepción
 	@Test(expected=NullPointerException.class)
     public void TestdistanceActors1() {
 		actor1 = null;
@@ -63,7 +63,7 @@ public class AppTest {
 		Main.distanceBetweenElements(graph, actor1, actor2);
     }
 
-	//Happy path
+	//Happy path FLUJO--> PASA POR EL IF Y EL BUCLE FOR
 	@Test()
     public void TestdistanceActors4() {
         assertEquals("Actor A -> Movie 1 -> Actor B<br>Distancia: 2", Main.distanceBetweenElements(graph, actor1, actor2));
@@ -173,6 +173,14 @@ public class AppTest {
 		Main.doCategoriesOf(request, response);
 	}
 	
+	//CONTROL DE FLUJO DISTANCE BETWEEN ELEMENTS(No entra en el if ni bucle for)
+	@Test()
+	public void distanceBetweenElementsFlujo() {
+		String element1 = "Actor A";
+		String element2 = "Actor D";
+		assertEquals("Distancia: 0",Main.distanceBetweenElements(graph, element1, element2));
+		 
+	}
 	
 	
 	
