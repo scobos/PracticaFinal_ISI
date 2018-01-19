@@ -63,12 +63,23 @@ public class AppTest {
 		Main.distanceBetweenElements(graph, actor1, actor2);
     }
 
-	//Happy path FLUJO--> PASA POR EL IF Y EL BUCLE FOR
+	//Happy path FLUJO--> ENTRA POR EL IF Y EL BUCLE FOR
 	@Test()
     public void TestdistanceActors4() {
         assertEquals("Actor A -> Movie 1 -> Actor B<br>Distancia: 2", Main.distanceBetweenElements(graph, actor1, actor2));
     }
-    //El actor es null
+	
+	//CONTROL DE FLUJO DISTANCE BETWEEN ELEMENTS(No entra en el if ni bucle for)
+	@Test()
+	public void TEstdistanceActors5() {
+		String element1 = "Actor A";
+		String element2 = "Actor D";
+		assertEquals("Distancia: 0",Main.distanceBetweenElements(graph, element1, element2));
+			 
+	}
+		
+		
+    //El actor es null, FLUJO --> ENTRA EN EL PRIMER IF
 	@Test(expected=NullPointerException.class)
     public void TestAInB1() {
 		String answer = "";
@@ -76,7 +87,7 @@ public class AppTest {
 		assertEquals(answer, Main.AInB(graph, actor1));
     }
 	
-	//El grafo está vacío
+	//El grafo está vacío, FLUJO --> ENTRA EN EL CATCH
 	@Test()
     public void TestAInB2() {
 		String answer = "No se han encontrado resultados para 'Actor A'";
@@ -84,12 +95,13 @@ public class AppTest {
 		assertEquals(answer, Main.AInB(graph, actor1));
     }
 	
-	//Happy path
+	//Happy path, FLUJO --> ENTRA POR BUCLE FOR Y SEGUNDO IF
 	@Test()
     public void TestAInB3() {
 		String answer = "Movie 1</br>Movie 3</br>";
 		assertEquals(answer, Main.AInB(graph, actor1));
     }
+	
 	
 	//El nombre de la película es null
 	@Test(expected=NullPointerException.class)
@@ -173,14 +185,7 @@ public class AppTest {
 		Main.doCategoriesOf(request, response);
 	}
 	
-	//CONTROL DE FLUJO DISTANCE BETWEEN ELEMENTS(No entra en el if ni bucle for)
-	@Test()
-	public void distanceBetweenElementsFlujo() {
-		String element1 = "Actor A";
-		String element2 = "Actor D";
-		assertEquals("Distancia: 0",Main.distanceBetweenElements(graph, element1, element2));
-		 
-	}
+	
 	
 	
 	
