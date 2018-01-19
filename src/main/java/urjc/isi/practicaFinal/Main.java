@@ -35,19 +35,14 @@ public class Main {
 		if (actor == null) {
 			throw new NullPointerException("Categorie null");
 		}
-		String movies = "";
-		StringBuilder s = new StringBuilder();
-		for (String v : graph.st) {
-			if(v.contains(actor)) {
-				s.append(v + ": ");
-				for (String w : graph.st.get(v)) {
-					s.append(w + " ");
-					movies += w + "<br>";
-				}
-				s.append('\n');
+		
+		String result = new String("");
+		for (String v:graph.adjacentTo(actor)) {
+			if(graph.st.contains(v)) {
+				result += v + "</br>";
 			}
 		}
-		return movies;
+		return result;
 	}
 
 	public static String categoriesOf(String movie) {
@@ -123,6 +118,7 @@ public class Main {
 
 	public static String doAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String filePath = "data/imdb-data/cast.all.txt";
+
 		String delimiter = "/";
 		Graph graph = new Graph(filePath, delimiter);
 		String element = request.queryParams("Element1");
