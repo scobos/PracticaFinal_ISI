@@ -3,7 +3,6 @@ package urjc.isi.practicaFinal;
 import static spark.Spark.*;
 import spark.Request;
 import spark.Response;
-
 import java.net.URISyntaxException;
 
 
@@ -14,18 +13,23 @@ public class Main {
 			throw new NullPointerException("Element null");
 		}
 
-		String ruta = new String("");
 		PathFinder pf = new PathFinder(graph, element1);
-		for (String v : pf.pathTo(element2)) {
-			ruta += v + " -> ";
-		}        
-		char[] ruta1 = ruta.toCharArray();
-		String result = new String(ruta1, 0, ruta1.length-4);
-
-		result += "<br>Distancia: " + pf.distanceTo(element2);
+		
+		String result = new String("");
+		if (pf.distanceTo(element2) != Integer.MAX_VALUE) {
+			String ruta = new String("");
+			for (String v : pf.pathTo(element2)) {
+				ruta += v + " -> ";
+			}        
+			char[] ruta1 = ruta.toCharArray();
+			result = new String(ruta1, 0, ruta1.length-4);
+			result += "<br>Distancia: " + pf.distanceTo(element2);
+		} else {
+			result += "Distancia: 0";
+		}
 		return result;
 	}
-
+	
 	//Método que devuelve que actor está en qué peliculas y viceversa
 	public static String AInB(Graph graph, String actor) {
 		if (actor == null) {
@@ -143,7 +147,7 @@ public class Main {
 	}
 
 	public static String doCategoriesOf(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
-    	String movie = request.queryParams("Movie");  
+		String movie = request.queryParams("Movie");
     	String category = categoriesOf(movie);
     	return category;
 	}
