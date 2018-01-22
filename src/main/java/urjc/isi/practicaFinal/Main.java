@@ -59,10 +59,9 @@ public class Main {
 			throw new NullPointerException("Movie null");
 		}
 
-		String[] docs = {"cast.G.txt"};
-	//	String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
-	//					"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
-	//					"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};
+		String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
+						"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
+						"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};
 		String categories = "";
 		String category = new String();
 		In in;
