@@ -59,9 +59,9 @@ public class Main {
 			throw new NullPointerException("Movie null");
 		}
 
-		String[] docs = {"./cast.00-06.txt", "./cast.06.txt", "./cast.action.txt",
-						"./cast.G.txt", "./cast.mpaa.txt", "./cast.PG.txt",
-						"./cast.PG13.txt", "cast.rated.txt", "./cast.all.txt"};
+		String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
+						"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
+						"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};
 		String categories = "";
 		String category = new String();
 		In in;
@@ -71,23 +71,23 @@ public class Main {
 				String bodyDoc = in.readAll();				    	//Leo todo el documento
 				if(bodyDoc.contains(movie)) {						//Si el documento contiene la línea añado la categoría
 					switch (docs[i]) {
-					case "./cast.00-06.txt": category = "Movies release since 2000";
+					case "cast.00-06.txt": category = "Movies release since 2000";
 					break;
-					case "./cast.06.txt": category = "Movies release in 2006";
+					case "cast.06.txt": category = "Movies release in 2006";
 					break;
-					case "./cast.G.txt": category = "Movies rated G by MPAA";
+					case "cast.G.txt": category = "Movies rated G by MPAA";
 					break;
-					case "./cast.PG.txt": category = "Movies rated PG by MPAA";
+					case "cast.PG.txt": category = "Movies rated PG by MPAA";
 					break;
-					case "./cast.PG13.txt": category = "Movies rated PG13 by MPAA";
+					case "cast.PG13.txt": category = "Movies rated PG13 by MPAA";
 					break;
-					case "./cast.mpaa.txt": category = "Movies rated by MPAA";
+					case "cast.mpaa.txt": category = "Movies rated by MPAA";
 					break;
-					case "./cast.action.txt": category = "Action Movies";
+					case "cast.action.txt": category = "Action Movies";
 					break;
-					case "./cast.rated.txt": category = "Popular Movies";
+					case "cast.rated.txt": category = "Popular Movies";
 					break;
-					case "./cast.all.txt": category = "Over 250,000 movies";
+					case "cast.all.txt": category = "Over 250,000 movies";
 					break;
 					default: category = "NOT FOUND";
 					break;
