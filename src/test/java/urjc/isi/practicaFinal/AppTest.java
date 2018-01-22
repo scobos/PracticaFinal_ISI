@@ -103,14 +103,14 @@ public class AppTest {
     }
 	
 	
-	//El nombre de la película es null
+	//El nombre de la película es null, FLUJO--> ENTRA EN EL PRIMER IF
 	@Test(expected=NullPointerException.class)
 	public void testCategoriesOf1() {
 		movie = null;
 	    Main.categoriesOf(movie);
 	}
 
-	//Error al abrir alguno de los ficheros
+	//Error al abrir alguno de los ficheros, FLUJO --> entramos en la excepción
 	@Test(expected=IllegalArgumentException.class)
 	public void testCategoriesOf2() {
 		File fich = new File("data/imdb-data/cast.G.txt");
@@ -122,11 +122,18 @@ public class AppTest {
 		Main.categoriesOf(movie);
 	}
 
-	//Happy Path
+	//Happy Path, FLUJO --> ENTRA EN EL BUCLE FOR, SEGUNDO IF Y ALGÚN CAMPO DEL SWITCH
 	@Test()
 	public void testCategoriesOf3() {
 		String answer = "Movies release since 2000<br>Action Movies<br>Over 250,000 movies<br>";
 		assertEquals(answer, Main.categoriesOf(movie));
+	}
+	//No encuentra categoría, FLUJO --> ENTRA EN EL TERCER IF
+	@Test() 
+	public void testCategoriesOf4() {
+		String movie = "Pelicula inventada";
+		String answer = "No se han encontrado resultados para '" + movie + "'";
+		assertEquals(answer,Main.categoriesOf(movie));
 	}
 	
 	//La categoría es null
