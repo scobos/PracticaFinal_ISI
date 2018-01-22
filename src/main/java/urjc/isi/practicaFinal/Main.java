@@ -12,20 +12,24 @@ public class Main {
 		if (element1 == null || element2 == null || graph.V() == 0) {
 			throw new NullPointerException("Element null");
 		}
-
-		PathFinder pf = new PathFinder(graph, element1);
-		
 		String result = new String("");
-		if (pf.distanceTo(element2) != Integer.MAX_VALUE) {
-			String ruta = new String("");
-			for (String v : pf.pathTo(element2)) {
-				ruta += v + " -> ";
-			}        
-			char[] ruta1 = ruta.toCharArray();
-			result = new String(ruta1, 0, ruta1.length-4);
-			result += "<br>Distancia: " + pf.distanceTo(element2);
-		} else {
-			result += "Distancia: 0";
+		try {
+			PathFinder pf = new PathFinder(graph, element1);
+			graph.validateVertex(element2);
+			if (pf.distanceTo(element2) != Integer.MAX_VALUE) {			
+				String ruta = new String("");
+				for (String v : pf.pathTo(element2)) {
+					ruta += v + " -> ";
+				}        
+				char[] ruta1 = ruta.toCharArray();
+				result = new String(ruta1, 0, ruta1.length-4);
+				result += "<br>Distancia: " + pf.distanceTo(element2);
+			} else {
+				result += "Distancia: 0";
+			}
+		} catch (IllegalArgumentException e) {
+			result = "No se han encontrado resultados para su búsqueda.</br>"
+					+ "Puede que haya introducido mal alguno de los elementos.";
 		}
 		return result;
 	}
