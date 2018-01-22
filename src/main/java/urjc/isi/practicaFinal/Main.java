@@ -56,8 +56,8 @@ public class Main {
 		}
 
 		String[] docs = {"./cast.00-06.txt", "./cast.06.txt", "./cast.action.txt",
-				"./cast.G.txt", "./cast.mpaa.txt", "./cast.PG.txt",
-				"./cast.PG13.txt", "cast.rated.txt", "./cast.all.txt"};
+						"./cast.G.txt", "./cast.mpaa.txt", "./cast.PG.txt",
+						"./cast.PG13.txt", "cast.rated.txt", "./cast.all.txt"};
 		String categories = "";
 		String category = new String();
 		In in;
@@ -91,6 +91,10 @@ public class Main {
 					categories += category + "<br>";		//Cambiar por concat, Habia ERROR.
 				}
 			}
+			
+			if (categories.isEmpty()) {
+				categories = "No se han encontrado resultados para '" + movie + "'";
+			}
 		}catch(IllegalArgumentException e) {
 			System.out.println(e);
 			throw new IllegalArgumentException();
@@ -99,30 +103,34 @@ public class Main {
 	}
 
 
-	public static String MoviesOfCategorie(String categorie) {
-		if (categorie == null) {
-			throw new NullPointerException("Categorie null");
+	public static String MoviesOfCategorie(String category) {
+		if (category == null) {
+			throw new NullPointerException("Category null");
 		}
 		In in;
-		String movies = "";
-		try {
-			String path = "data/imdb-data/cast." + categorie + ".txt";
-			in = new In(path);
-			while (!in.isEmpty()) {
-				String line = in.readLine();				    	//Leo linea a linea (cada linea es una película)
-				String[] parts = line.split("/");					//Hago un split hasta la primera /
-				movies += (parts[0]) + "<br>";					//Concateno todas las películas
+		String result = "";
+		if ("NotCategory".equals(category)) {
+			result = "Por favor, vuelve atrás y selecciona una categoría.";
+		} else {
+			try {
+				String path = "data/imdb-data/cast." + category + ".txt";
+				in = new In(path);
+				while (!in.isEmpty()) {
+					String line = in.readLine();				    	//Leo linea a linea (cada linea es una película)
+					String[] parts = line.split("/");					//Hago un split hasta la primera /
+					result += (parts[0]) + "<br>";					//Concateno todas las películas
+				}
+			}
+			catch (IllegalArgumentException e) {
+				System.out.println(e);
+				throw new IllegalArgumentException("Error al abrir el archivo");
 			}
 		}
-		catch (IllegalArgumentException e) {
-			System.out.println(e);
-			throw new IllegalArgumentException("Error al abrir el archivo");
-		}
-		return movies;
+		return result;
 	}
 
 	public static String doAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
-		String filePath = "data/imdb-data/cast.all.txt";
+		String filePath = "data/imdb-data/cast.all.2.txt";
 		String delimiter = "/";
 		Graph graph = new Graph(filePath, delimiter);
 		String element = request.queryParams("Element1");
@@ -131,7 +139,7 @@ public class Main {
 	}
 
 	public static String doDistance(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
-		String filePath = "data/imdb-data/cast.all.txt";
+		String filePath = "data/imdb-data/cast.all.2.txt";
 		String delimiter = "/";
 		Graph graph = new Graph(filePath, delimiter);
 		String element1 = request.queryParams("Element1");
@@ -185,7 +193,7 @@ public class Main {
 	public static String FormularyOfCategories(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String body = "<form action='/OfCategories' method='post'>" +
 						  "<div>" + 
-						  	  "<select name='Categoria'>\n\t<option selected value='0'>Elige categoría</option>" +
+						  	  "<select name='Categoria'>\n\t<option selected value=NotCategory>Elige categoría</option>" +
 						  	  "<option value=00-06>Movies released since 2000</option>" +
 						  	  "<option value=06>Movies release in 2006</option>" +
 						  	  "<option value=G>Movies rated G by MPAA</option>" +
