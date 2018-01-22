@@ -59,9 +59,10 @@ public class Main {
 			throw new NullPointerException("Movie null");
 		}
 
-		String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
-						"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
-						"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};
+		String[] docs = {"cast.G.txt"};
+	//	String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
+	//					"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
+	//					"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};
 		String categories = "";
 		String category = new String();
 		In in;
@@ -100,7 +101,6 @@ public class Main {
 				categories = "No se han encontrado resultados para '" + movie + "'";
 			}
 		}catch(IllegalArgumentException e) {
-			System.out.println(e);
 			throw new IllegalArgumentException();
 		}
 		return categories;
@@ -126,7 +126,6 @@ public class Main {
 				}
 			}
 			catch (IllegalArgumentException e) {
-				System.out.println(e);
 				throw new IllegalArgumentException("Error al abrir el archivo");
 			}
 		}
