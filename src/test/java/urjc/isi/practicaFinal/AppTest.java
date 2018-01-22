@@ -74,11 +74,22 @@ public class AppTest {
 	
 	//CONTROL DE FLUJO DISTANCE BETWEEN ELEMENTS(No entra en el if ni bucle for)
 	@Test()
-	public void TEstdistanceActors5() {
+	public void TestdistanceActors5() {
 		String element1 = "Actor A";
 		String element2 = "Actor D";
 		assertEquals("Distancia: 0",Main.distanceBetweenElements(graph, element1, element2));
 			 
+	}
+	
+	//Uno de los elementos no se encuentra en la lista
+	@Test()
+	public void TestdistanceActors6() {
+		String element1 = "Act";
+		String element2 = "Actor A";
+		String answer = "No se han encontrado resultados para su búsqueda.</br>"
+					  + "Puede que haya introducido mal alguno de los elementos.";
+		assertEquals(answer,Main.distanceBetweenElements(graph, element1, element2));
+
 	}
 		
 		
