@@ -136,21 +136,21 @@ public class AppTest {
 		assertEquals(answer,Main.categoriesOf(movie));
 	}
 	
-	//La categoría es null
+	//La categoría es null, FLUJO --> ENTRA EN EL PRIMER IF
 	@Test(expected=NullPointerException.class)
 	public void MoviesOfCategory1() {
 		category = null;
 		Main.MoviesOfCategorie(category);
 	}
 
-	//La categoría no coincide con las posibles
+	//La categoría no coincide con las posibles, FLUJO--> entra en el catch
 	@Test(expected=IllegalArgumentException.class)
 	public void MoviesOfCategory2() {
 		category = " Categoria Inventada";
 		Main.MoviesOfCategorie(category);
 	}
 
-	//Happy path
+	//Happy path, FLUJO --> no entra en el segundo if y entra en el while
 	@Test()
 	public void MoviesOfCategory3() throws IOException {
 		String categorie = "action";
@@ -158,6 +158,14 @@ public class AppTest {
 		in = new In("data/other-data/action_movies.txt");
 		String bodyDoc = in.readAll();	//para poder comparar el contenido del fichero con la salida del método
 		assertEquals(bodyDoc, Main.MoviesOfCategorie(categorie));
+	}
+	
+	//Se selecciona la opción elige una categoría, FLUJO--> Entra en el segundo if
+	@Test()
+	public void MoviesofCategory4() {
+		String category = "NotCategory";
+		String answer = "Por favor, vuelve atrás y selecciona una categoría.";
+		assertEquals(answer, Main.MoviesOfCategorie(category));
 	}
 	
 	//Request and Response null
