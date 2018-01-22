@@ -94,7 +94,7 @@ public class Graph {
     }
 
     // throw an exception if v is not a vertex
-    private void validateVertex(String v) {
+    public void validateVertex(String v) {
         if (!hasVertex(v)) throw new IllegalArgumentException(v + " is not a vertex");
     }
 
