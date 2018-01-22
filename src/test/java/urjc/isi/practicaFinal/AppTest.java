@@ -20,6 +20,9 @@ public class AppTest {
 	String actor2 = "";
 	String movie = "";
 	String category = "";
+	Request request = null;
+	Response response = null;
+	
 	
 	@Before public void setUp()         // set up test fixture
 	{  
@@ -171,32 +174,24 @@ public class AppTest {
 	//Request and Response null
 	@Test(expected= NullPointerException.class)
 	public void doAInB1() throws ClassNotFoundException, URISyntaxException {
-		Request request = null;
-		Response response = null;
 		Main.doAinB(request, response);
 	}
 	
 	//Request and Response null
 	@Test(expected= NullPointerException.class)
 	public void doDistance1() throws ClassNotFoundException, URISyntaxException {
-		Request request = null;
-		Response response = null;
 		Main.doDistance(request, response);
 	}
 	
 	//Request and Response null
 	@Test(expected= NullPointerException.class)
 	public void doOfCategories1() throws ClassNotFoundException, URISyntaxException {
-		Request request = null;
-		Response response = null;
 		Main.doOfCategories(request, response);
 	}
 	
 	//Request and Response null
 	@Test(expected= NullPointerException.class)
 	public void doCategoriesOf1() throws ClassNotFoundException, URISyntaxException {
-		Request request = null;
-		Response response = null;
 		Main.doCategoriesOf(request, response);
 	}
 	
