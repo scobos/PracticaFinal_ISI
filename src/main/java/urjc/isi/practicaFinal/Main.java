@@ -197,15 +197,15 @@ public class Main {
 		String body = "<form action='/OfCategories' method='post'>" +
 						  "<div>" + 
 						  	  "<select name='Categoria'>\n\t<option selected value=NotCategory>Elige categoría</option>" +
-						  	  "<option value=00-06>Movies released since 2000</option>" +
+						  	  "<option value=00-06.2>Movies released since 2000</option>" +
 						  	  "<option value=06>Movies release in 2006</option>" +
 						  	  "<option value=G>Movies rated G by MPAA</option>" +
 						  	  "<option value=PG>Movies rated PG by MPAA</option>" +
 						  	  "<option value=PG13>Movies rated PG13 by MPAA</option>" +
-						  	  "<option value=mpaa>Movies rated by MPAA</option>" +
-						  	  "<option value=action>Action Movies</option>" +
+						  	  "<option value=mpaa.2>Movies rated by MPAA</option>" +
+						  	  "<option value=action.2>Action Movies</option>" +
 						  	  "<option value=rated>Popular Movies</option>" +
-						  	  "<option value=all>Over 250,000 movies</option>" +
+						  	  "<option value=all.2>Over 250,000 movies</option>" +
 						  	  "</select><input class='button' type='submit' value='Buscar'>"+
 						  "</div>" +
 					   "</form>";
@@ -272,7 +272,9 @@ public class Main {
 
 
 	}
-
+//Para la base de datos coger las 9999 peliculas de all.2, buscar con el codigo de 
+	// CategoriesOf las categorias de cada pelicula y añadir un campo de pelicula y otro de categorias.
+	//
 	static int getHerokuAssignedPort() {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		if (processBuilder.environment().get("PORT") != null) {
