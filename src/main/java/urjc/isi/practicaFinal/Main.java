@@ -94,6 +94,7 @@ public class Main {
 					}
 					categories += category + "<br>";		//Cambiar por concat, Habia ERROR.
 				}
+			in.close();
 			}
 			
 			if (categories.isEmpty()) {
