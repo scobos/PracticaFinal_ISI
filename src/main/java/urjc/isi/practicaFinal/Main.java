@@ -236,12 +236,14 @@ public class Main {
 	
 	public static void prepareDataBase(Connection conn) throws SQLException{
 		System.out.println("ENTRA PREPAREDATABASE");
-		String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
+		/*String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
 				"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
-				"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};					//Preparo la lista de documentos donde buscaré las películas
+				"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};		*/			//Preparo la lista de documentos donde buscaré las películas
+		String[] docs = {"cast.G.txt"};
 		In in;
 		In inGeneral;
 		inGeneral = new In("data/imdb-data/cast.all.2.txt");
+		System.out.println("ABRE EL FICHERO CAST.ALL.2.TXT");
 		String s;
 
 		while ((s = inGeneral.readLine()) != null) {
@@ -262,16 +264,16 @@ public class Main {
 					String bodyDoc = in.readAll();				    	//Leo todo el documento
 					if(bodyDoc.contains(film)) {						//Si el documento contiene la línea añado la categoría
 						switch (docs[i]) {
-						case "cast.00-06.txt": 
+						/*case "cast.00-06.txt": 
 							category = "Movies release since 2000";
 							break;
 						case "cast.06.txt": 
 							category = "Movies release in 2006";
-							break;
+							break;*/
 						case "cast.G.txt": 
 							category = "Movies rated G by MPAA";
 							break;
-						case "cast.PG.txt": 
+						/*case "cast.PG.txt": 
 							category = "Movies rated PG by MPAA";
 							break;
 						case "cast.PG13.txt": 
@@ -288,7 +290,7 @@ public class Main {
 							break;
 						case "cast.all.txt": 
 							category = "Over 250,000 movies";
-							break;
+							break;*/
 						default: 
 							category = "NOT FOUND";
 							break;
