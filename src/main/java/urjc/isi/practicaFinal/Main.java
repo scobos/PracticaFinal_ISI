@@ -234,7 +234,7 @@ public class Main {
 
 	
 	
-	public static void prepareDataBase(Connection conn) throws SQLException{
+	public static String prepareDataBase(Request request, Response response) throws SQLException{
 		System.out.println("ENTRA PREPAREDATABASE");
 		/*String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
 				"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
@@ -253,7 +253,7 @@ public class Main {
 		    String categories = "";
 			String category = new String();
 			try {
-				Statement statement = conn.createStatement();
+				Statement statement = connection.createStatement();
 
 				// This code only works for PostgreSQL
 				statement.executeUpdate("drop table if exists films");
@@ -307,7 +307,7 @@ public class Main {
 			}
 		}
 		System.out.println("SALE WHILE");
-
+		return "HECHO";
 	}
 	
     public static void insert(Connection conn, String film, String categories) {
@@ -319,6 +319,7 @@ public class Main {
 			pstmt.setString(2, categories);
 			System.out.println("ESTOY EN EL INSERT DESPUÉS DE METER CATEGORIES");
 			pstmt.executeUpdate();
+			System.out.println("ESTOY EN EL INSERT DESPUÉS DE EXECUTE");
 	    } catch (SQLException e) {
 	    	System.out.println(e.getMessage());
 	    }
@@ -350,7 +351,6 @@ public class Main {
 		String password = dbUri.getUserInfo().split(":")[1];
 		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 		connection = DriverManager.getConnection(dbUrl, username, password);
-		prepareDataBase(connection);
 		get("/", (req, res) ->
 		"<form action='/FormularyAInB' method='post'>" +
 			"<div class='button'>Puedes elegir entre las siguientes opciones:<br/><br/>" +
@@ -377,6 +377,7 @@ public class Main {
 			"</div>" +
 		"</form>");
 
+		get("/upload", Main::prepareDataBase);
 		get("/FormularyAInB", Main::FormularyAinB);
 		get("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
 		get("/FormularyOfCategories", Main::FormularyOfCategories);
