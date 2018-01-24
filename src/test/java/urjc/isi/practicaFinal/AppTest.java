@@ -139,7 +139,7 @@ public class AppTest {
 	//Happy Path, FLUJO --> ENTRA EN EL BUCLE FOR, SEGUNDO IF Y ALGÚN CAMPO DEL SWITCH
 	@Test()
 	public void testCategoriesOf3() {
-		String answer = "Movies release since 2000<br>Action Movies<br>Over 250,000 movies<br>";
+		String answer = "Movies release since 2000<br>Action Movies<br>";
 		assertEquals(answer, Main.categoriesOf(movie));
 	}
 	//No encuentra categoría, FLUJO --> ENTRA EN EL TERCER IF
