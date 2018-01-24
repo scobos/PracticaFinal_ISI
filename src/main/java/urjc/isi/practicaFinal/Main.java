@@ -236,10 +236,9 @@ public class Main {
 	
 	public static String prepareDataBase(Request request, Response response) throws SQLException{
 		System.out.println("ENTRA PREPAREDATABASE");
-		/*String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
+		String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
 				"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
-				"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};		*/			//Preparo la lista de documentos donde buscaré las películas
-		String[] docs = {"cast.G.txt"};
+				"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};
 		In in;
 		In inGeneral;
 		inGeneral = new In("data/imdb-data/prueba.txt");
@@ -264,16 +263,16 @@ public class Main {
 					String bodyDoc = in.readAll();				    	//Leo todo el documento
 					if(bodyDoc.contains(film)) {						//Si el documento contiene la línea añado la categoría
 						switch (docs[i]) {
-						/*case "cast.00-06.txt": 
+						case "cast.00-06.txt": 
 							category = "Movies release since 2000";
 							break;
 						case "cast.06.txt": 
 							category = "Movies release in 2006";
-							break;*/
+							break;
 						case "cast.G.txt": 
 							category = "Movies rated G by MPAA";
 							break;
-						/*case "cast.PG.txt": 
+						case "cast.PG.txt": 
 							category = "Movies rated PG by MPAA";
 							break;
 						case "cast.PG13.txt": 
@@ -290,7 +289,7 @@ public class Main {
 							break;
 						case "cast.all.txt": 
 							category = "Over 250,000 movies";
-							break;*/
+							break;
 						default: 
 							category = "NOT FOUND";
 							break;
@@ -342,6 +341,24 @@ public class Main {
     	}
     	return result;
     }
+    
+    public static String pruebaselect(Request request , Response response) {
+    	String sql = "SELECT * FROM films";
+    	String result = new String();
+    	try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			
+    		ResultSet rs = pstmt.executeQuery();
+    		while (rs.next()) {
+    		    // read the result set
+    		    result += "film = " + rs.getString("film") + rs.getString("categories") + "<br>";
+    		    System.out.println("SELECT BASES DE DATOS : film = "+rs.getString("film") + "\n");
+    		}
+    	}catch (SQLException e) {
+    		System.out.println(e.getMessage());
+    	}
+    	return result;
+    	
+    }
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, URISyntaxException {
 		port(getHerokuAssignedPort());
@@ -377,7 +394,7 @@ public class Main {
 				"<button type='submit'>Películas de categoría</button>" +
 			"</div>" +
 		"</form>");
-
+		get("/select", Main::pruebaselect);
 		get("/upload", Main::prepareDataBase);
 		get("/FormularyAInB", Main::FormularyAinB);
 		get("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
