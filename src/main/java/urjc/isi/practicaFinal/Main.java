@@ -327,19 +327,15 @@ public class Main {
     	try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
     		pstmt.setString(1, film);
     		ResultSet rs = pstmt.executeQuery();
-    		while (rs.next()) {
-    		    // read the result set
-    		    result += rs.getString("categories") + "<br/>";
-    		}
-    		System.out.println("CATEGORIA -->  " + rs.getString("categories"));
+    		result = rs.getString("categories") + "<br/>";
+    		
     		if ((rs.getString("categories")).isEmpty()){
     			result = "No se han encontrado categorías para la película '" + film + "'";
+    		}else if (result.isEmpty()) {
+    			result = "La película '" + film + "' no se encuentra en nuestra base de datos";
     		}
     	}catch (SQLException e) {
     		System.out.println(e.getMessage());
-    	}
-    	if (result.isEmpty()) {
-    		result = "La película '" + film + "' no se encuentra en nuestra base de datos";
     	}
     	return result;
     }
