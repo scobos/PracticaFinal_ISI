@@ -257,7 +257,7 @@ public class Main {
 
 				// This code only works for PostgreSQL
 				statement.executeUpdate("drop table if exists films");
-				statement.executeUpdate("create table films (film text, actor text)");
+				statement.executeUpdate("create table films (film text, categories text)");
 
 				for (int i = 0; i < docs.length; i++) {					//Busco en todos los documentos cada una de las películas, si aparece agrego esta categoría
 					in = new In("data/other-data/" + docs[i]);
