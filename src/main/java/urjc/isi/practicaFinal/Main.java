@@ -4,7 +4,6 @@ import static spark.Spark.*;
 import spark.Request;
 import spark.Response;
 
-import java.beans.Statement;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
@@ -235,7 +234,7 @@ public class Main {
 
 	
 	
-	public static void prepareDataBase() throws SQLException{
+	public static void prepareDataBase(Connection conn) throws SQLException{
 		System.out.println("ENTRA PREPAREDATABASE");
 		String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
 				"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
@@ -252,11 +251,11 @@ public class Main {
 		    String categories = "";
 			String category = new String();
 			try {
-				Statement statement = (Statement) connection.createStatement();
+				Statement statement = conn.createStatement();
 
 				// This code only works for PostgreSQL
-				((java.sql.Statement) statement).executeUpdate("drop table if exists films");
-				((java.sql.Statement) statement).executeUpdate("create table films (film text, actor text)");
+				statement.executeUpdate("drop table if exists films");
+				statement.executeUpdate("create table films (film text, actor text)");
 
 				for (int i = 0; i < docs.length; i++) {					//Busco en todos los documentos cada una de las películas, si aparece agrego esta categoría
 					in = new In("data/imdb-data/" + docs[i]);
@@ -305,6 +304,8 @@ public class Main {
 				throw new IllegalArgumentException();
 			}
 		}
+		System.out.println("SALE WHILE");
+
 	}
 	
     public static void insert(Connection conn, String film, String categories) {
@@ -345,7 +346,7 @@ public class Main {
 		String password = dbUri.getUserInfo().split(":")[1];
 		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 		connection = DriverManager.getConnection(dbUrl, username, password);
-		prepareDataBase();
+		prepareDataBase(connection);
 		get("/", (req, res) ->
 		"<form action='/FormularyAInB' method='post'>" +
 			"<div class='button'>Puedes elegir entre las siguientes opciones:<br/><br/>" +
