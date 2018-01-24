@@ -307,8 +307,9 @@ public class Main {
 		String password = dbUri.getUserInfo().split(":")[1];
 		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 		connection = DriverManager.getConnection(dbUrl, username, password);
-		
-		String menu = "<html><body>" +
+		In in = new In("splash.txt");
+		String splash = in.readAll();
+		String menu = splash + "<html><body>" +
 		"<form action='/upload' method='post'>" + 
 			"<div class='button'>" +
 				"<button type='submit'  class='btn btn-default ribbon'>Cargar base de datos</button>" +
