@@ -5,11 +5,12 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 
 import org.junit.*;
 import spark.Request;
 import spark.Response;
-
+import static org.mockito.Mockito.*;
 
 public class AppTest {
 	
@@ -205,6 +206,22 @@ public class AppTest {
 	public void doCategoriesOf1() throws ClassNotFoundException, URISyntaxException {
 		Main.doCategoriesOf(request, response);
 	}
+	
+	//Request and Response null
+	@Test(expected= NullPointerException.class)
+	public void doPrepareDataBase1() throws ClassNotFoundException, URISyntaxException, SQLException {
+		Main.doPrepareDataBase(request, response);
+	}
+	
+	/*@Test()
+	public void select1() {
+		 = mock(String.class);
+		String film = "101 Dalmatians (1996)";
+		String answer = "Movies rated G by MPAA<br>Movies rated by MPAA<br>Popular Movies<br><br/>";
+		assertEquals(answer, Main.select(film));
+	}*/
+	
+	
 	
 	
 	

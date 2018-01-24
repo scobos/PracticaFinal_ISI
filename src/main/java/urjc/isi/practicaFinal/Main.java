@@ -254,7 +254,7 @@ public class Main {
 			throw new IllegalArgumentException();
 		}
 		In inGeneral;
-		inGeneral = new In("data/imdb-data/prueba.txt");
+		inGeneral = new In("data/imdb-data/cast.all.2.txt");
 		String s;
 
 		while ((s = inGeneral.readLine()) != null) {
