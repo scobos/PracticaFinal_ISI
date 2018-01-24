@@ -166,7 +166,7 @@ public class Main {
 
 	public static String doCategoriesOf(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String movie = request.queryParams("Movie");
-    	String category = categoriesOf(movie);
+    	String category = pruebaselect(movie);
     	return category;
 	}
 
@@ -339,15 +339,15 @@ public class Main {
     	return result;
     }
     
-    public static String pruebaselect(Request request , Response response) {
-    	String sql = "SELECT * FROM films";
+    public static String pruebaselect(String film) {
+    	String sql = "SELECT * FROM films WHERE films.film=?";
     	String result = new String();
     	try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-			
+    		pstmt.setString(1, film);
     		ResultSet rs = pstmt.executeQuery();
     		while (rs.next()) {
     		    // read the result set
-    		    result += "film = " + rs.getString("film") + rs.getString("categories") + "<br>";
+    		    result += rs.getString("categories") + "<br>";
     		    System.out.println("SELECT BASES DE DATOS : film = "+rs.getString("film") + "\n");
     		}
     	}catch (SQLException e) {
@@ -391,7 +391,7 @@ public class Main {
 				"<button type='submit'>Películas de categoría</button>" +
 			"</div>" +
 		"</form>");
-		get("/select", Main::pruebaselect);
+		//get("/select", Main::pruebaselect);
 		get("/upload", Main::prepareDataBase);
 		get("/FormularyAInB", Main::FormularyAinB);
 		get("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
