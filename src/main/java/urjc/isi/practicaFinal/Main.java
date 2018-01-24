@@ -239,7 +239,7 @@ public class Main {
 		/*String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
 				"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
 				"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};		*/			//Preparo la lista de documentos donde buscaré las películas
-		String[] docs = {"cast.G.txt"};
+		String[] docs = {"tinyMovies.txt"};
 		In in;
 		In inGeneral;
 		inGeneral = new In("data/imdb-data/cast.all.2.txt");
@@ -260,7 +260,7 @@ public class Main {
 				statement.executeUpdate("create table films (film text, actor text)");
 
 				for (int i = 0; i < docs.length; i++) {					//Busco en todos los documentos cada una de las películas, si aparece agrego esta categoría
-					in = new In("data/imdb-data/" + docs[i]);
+					in = new In("data/other-data/" + docs[i]);
 					String bodyDoc = in.readAll();				    	//Leo todo el documento
 					if(bodyDoc.contains(film)) {						//Si el documento contiene la línea añado la categoría
 						switch (docs[i]) {
@@ -315,7 +315,9 @@ public class Main {
 
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, film);
+			System.out.println("ESTOY EN EL INSERT ANTES DE METER CATEGORIES");
 			pstmt.setString(2, categories);
+			System.out.println("ESTOY EN EL INSERT DESPUÉS DE METER CATEGORIES");
 			pstmt.executeUpdate();
 	    } catch (SQLException e) {
 	    	System.out.println(e.getMessage());
