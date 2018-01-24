@@ -327,11 +327,12 @@ public class Main {
     	try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
     		pstmt.setString(1, film);
     		ResultSet rs = pstmt.executeQuery();
-    		result = rs.getString("categories") + "<br/>";
-    		
+    		rs.next();
+    		result += rs.getString("categories") + "<br/>";
+    		    
     		if ((rs.getString("categories")).isEmpty()){
     			result = "No se han encontrado categorías para la película '" + film + "'";
-    		}else if (result.isEmpty()) {
+    		} else if (result.isEmpty()) {
     			result = "La película '" + film + "' no se encuentra en nuestra base de datos";
     		}
     	}catch (SQLException e) {
