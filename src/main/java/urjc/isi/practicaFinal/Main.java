@@ -166,7 +166,7 @@ public class Main {
 
 	public static String doCategoriesOf(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String movie = request.queryParams("Movie");
-    	String category = pruebaselect(movie);
+    	String category = select(movie);
     	return category;
 	}
 
@@ -235,14 +235,12 @@ public class Main {
 	
 	
 	public static String prepareDataBase(Request request, Response response) throws SQLException{
-		System.out.println("ENTRA PREPAREDATABASE");
 		String[] docs = {"cast.00-06.2.txt", "cast.06.txt", "cast.action.2.txt",
 				"cast.G.txt", "cast.mpaa.2.txt", "cast.PG.txt",
 				"cast.PG13.txt", "cast.rated.txt"};
 		In in;
 		In inGeneral;
 		inGeneral = new In("data/imdb-data/prueba.txt");
-		System.out.println("ABRE EL FICHERO CAST.ALL.2.TXT");
 		String s;
 
 		try {
@@ -301,10 +299,14 @@ public class Main {
 				}
 				// Now get film and categories and insert them
 				insert(connection, film, categories);
-			System.out.println("LA PELÍCULA ES: " + film);
 		}
-		System.out.println("SALE WHILE");
-		return "HECHO";
+		String exit = "<form action='/' method='post'>" + 
+							"<div class='button'>" +
+								"La base de datos ha sido creada. <br>"+
+								"<button type='submit'  class='btn btn-default ribbon'>Ir a la página principal</button>" +
+							"</div>" +
+						"</form>";
+		return exit;
 	}
 	
     public static void insert(Connection conn, String film, String categories) {
@@ -312,34 +314,14 @@ public class Main {
 
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, film);
-			System.out.println("ESTOY EN EL INSERT ANTES DE METER CATEGORIES");
 			pstmt.setString(2, categories);
-			System.out.println("ESTOY EN EL INSERT DESPUÉS DE METER CATEGORIES");
 			pstmt.executeUpdate();
-			System.out.println("ESTOY EN EL INSERT DESPUÉS DE EXECUTE");
 	    } catch (SQLException e) {
 	    	System.out.println(e.getMessage());
 	    }
     }
     
-    public static String select(Connection conn, String table, String film) {
-    	String sql = "SELECT F.categories FROM films F WHERE F.film=?";
-    	String result = new String();
-    	try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, film);
-    		ResultSet rs = pstmt.executeQuery();
-    		while (rs.next()) {
-    		    // read the result set
-    		    result += "film = " + rs.getString("film") + "\n";
-    		    System.out.println("film = "+rs.getString("film") + "\n");
-    		}
-    	}catch (SQLException e) {
-    		System.out.println(e.getMessage());
-    	}
-    	return result;
-    }
-    
-    public static String pruebaselect(String film) {
+    public static String select(String film) {
     	String sql = "SELECT * FROM films WHERE films.film=?";
     	String result = new String();
     	try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -348,10 +330,12 @@ public class Main {
     		while (rs.next()) {
     		    // read the result set
     		    result += rs.getString("categories") + "<br>";
-    		    System.out.println("SELECT BASES DE DATOS : film = "+rs.getString("film") + "\n");
     		}
     	}catch (SQLException e) {
     		System.out.println(e.getMessage());
+    	}
+    	if (result.isEmpty()){
+    		result += "No se han encontrado categorías para la película seleccionada";
     	}
     	return result;
     	
@@ -367,6 +351,11 @@ public class Main {
 		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 		connection = DriverManager.getConnection(dbUrl, username, password);
 		get("/", (req, res) ->
+		"<form action='/upload' method='post'>" + 
+			"<div class='button'>" +
+				"<button type='submit'  class='btn btn-default ribbon'>Cargar base de datos</button>" +
+			"</div>" +
+		"</form>"+
 		"<form action='/FormularyAInB' method='post'>" +
 			"<div class='button'>Puedes elegir entre las siguientes opciones:<br/><br/>" +
 				"-Buscar qué actores salen en una película, o en qué películas sale un actor:<br/>" +
@@ -391,13 +380,13 @@ public class Main {
 				"<button type='submit'>Películas de categoría</button>" +
 			"</div>" +
 		"</form>");
-		//get("/select", Main::pruebaselect);
 		get("/upload", Main::prepareDataBase);
 		get("/FormularyAInB", Main::FormularyAinB);
 		get("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
 		get("/FormularyOfCategories", Main::FormularyOfCategories);
 		get("/FormularyCategoriesOf", Main::FormularyCategoriesOf);
 		
+		post("/upload", Main::prepareDataBase);
 		post("/FormularyAInB", Main::FormularyAinB);
 		post("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
 		post("/FormularyOfCategories", Main::FormularyOfCategories);
