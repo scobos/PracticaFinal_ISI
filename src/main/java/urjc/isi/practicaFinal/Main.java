@@ -166,6 +166,17 @@ public class Main {
     	String category = select(movie);
     	return category;
 	}
+    	
+    public static String doPrepareDataBase(Request request, Response response) throws SQLException{
+    	prepareDataBase();
+		String result = "<form action='/' method='post'>" + 
+							"<div class='button'>" +
+								"La base de datos ha sido creada. <br>"+
+								"<button type='submit'  class='btn btn-default ribbon'>Ir a la página principal</button>" +
+							"</div>" +
+						"</form>";
+    	return result;
+	}
 
 	public static String FormularyAinB(Request request, Response response) throws ClassNotFoundException, URISyntaxException {
 		String body = "<form action='/AInB' method='post'>" +
@@ -231,8 +242,7 @@ public class Main {
 
 	
 	
-	public static String prepareDataBase(Request request, Response response) throws SQLException{
-		
+	public static void prepareDataBase() throws SQLException{
 		try {
 			Statement statement = connection.createStatement();
 			
@@ -254,13 +264,6 @@ public class Main {
 			// Now get film and categories and insert them
 			insert(connection, film, categories);
 		}
-		String exit = "<form action='/' method='post'>" + 
-							"<div class='button'>" +
-								"La base de datos ha sido creada. <br>"+
-								"<button type='submit'  class='btn btn-default ribbon'>Ir a la página principal</button>" +
-							"</div>" +
-						"</form>";
-		return exit;
 	}
 	
     public static void insert(Connection conn, String film, String categories) {
@@ -283,7 +286,6 @@ public class Main {
     		ResultSet rs = pstmt.executeQuery();
     		rs.next();
     		result += rs.getString("categories") + "<br/>";
-    		System.out.println("CATEGORIA--->" + rs.getString("categories"));
     		if (rs.getString("categories").isEmpty()) {
     			result = "No se han encontrado categorías para la película '" + film + "'";
     		}
@@ -337,14 +339,14 @@ public class Main {
 		"</form>";
 		
 		get("/", (req, res) -> menu);
-		get("/upload", Main::prepareDataBase);
+		get("/upload", Main::doPrepareDataBase);
 		get("/FormularyAInB", Main::FormularyAinB);
 		get("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
 		get("/FormularyOfCategories", Main::FormularyOfCategories);
 		get("/FormularyCategoriesOf", Main::FormularyCategoriesOf);
 		
 		post("/", (req, res) -> menu);
-		post("/upload", Main::prepareDataBase);
+		post("/upload", Main::doPrepareDataBase);
 		post("/FormularyAInB", Main::FormularyAinB);
 		post("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
 		post("/FormularyOfCategories", Main::FormularyOfCategories);
