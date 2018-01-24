@@ -43,6 +43,7 @@ public class Main {
 	
 	//Método que devuelve que actor está en qué peliculas y viceversa
 	public static String AInB(Graph graph, String element) {
+		System.out.println("ENTRA AINB");
 		if (element == null) {
 			throw new NullPointerException("Categorie null");
 		}
@@ -235,6 +236,7 @@ public class Main {
 	
 	
 	public static void prepareDataBase() throws SQLException{
+		System.out.println("ENTRA PREPAREDATABASE");
 		String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
 				"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
 				"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};					//Preparo la lista de documentos donde buscaré las películas
@@ -246,7 +248,6 @@ public class Main {
 		while ((s = inGeneral.readLine()) != null) {
 		    StringTokenizer tokenizer = new StringTokenizer(s, "/");				//Tokenizo cada línea por la /
 		    String film = tokenizer.nextToken();									//Me quedo con el primer elemento de cada línea, la película
-		    
 		    
 		    String categories = "";
 			String category = new String();
