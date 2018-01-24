@@ -344,6 +344,7 @@ public class Main {
 		String password = dbUri.getUserInfo().split(":")[1];
 		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 		connection = DriverManager.getConnection(dbUrl, username, password);
+		prepareDataBase();
 		get("/", (req, res) ->
 		"<form action='/FormularyAInB' method='post'>" +
 			"<div class='button'>Puedes elegir entre las siguientes opciones:<br/><br/>" +
