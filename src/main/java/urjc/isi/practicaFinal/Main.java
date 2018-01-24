@@ -239,10 +239,10 @@ public class Main {
 		/*String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
 				"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
 				"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};		*/			//Preparo la lista de documentos donde buscaré las películas
-		String[] docs = {"tinyMovies.txt"};
+		String[] docs = {"cast.G.txt"};
 		In in;
 		In inGeneral;
-		inGeneral = new In("data/imdb-data/cast.all.2.txt");
+		inGeneral = new In("data/imdb-data/prueba.txt");
 		System.out.println("ABRE EL FICHERO CAST.ALL.2.TXT");
 		String s;
 
@@ -260,7 +260,7 @@ public class Main {
 				statement.executeUpdate("create table films (film text, categories text)");
 
 				for (int i = 0; i < docs.length; i++) {					//Busco en todos los documentos cada una de las películas, si aparece agrego esta categoría
-					in = new In("data/other-data/" + docs[i]);
+					in = new In("data/imdb-data/" + docs[i]);
 					String bodyDoc = in.readAll();				    	//Leo todo el documento
 					if(bodyDoc.contains(film)) {						//Si el documento contiene la línea añado la categoría
 						switch (docs[i]) {
