@@ -3,11 +3,18 @@ package urjc.isi.practicaFinal;
 import static spark.Spark.*;
 import spark.Request;
 import spark.Response;
+
+import java.beans.Statement;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.*;
+import java.util.StringTokenizer;
 
 
 public class Main {
 	
+    private static Connection connection;
+    
 	public static String distanceBetweenElements(Graph graph,String element1,String element2) {
 		if (element1 == null || element2 == null || graph.V() == 0) {
 			throw new NullPointerException("Element null");
@@ -225,10 +232,118 @@ public class Main {
 		return body;
 	}
 
+	
+	
+	public static void prepareDataBase() throws SQLException{
+		String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
+				"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
+				"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};					//Preparo la lista de documentos donde buscaré las películas
+		In in;
+		In inGeneral;
+		inGeneral = new In("data/imdb-data/all.2.txt");
+		String s;
 
-	public static void main(String[] args) throws ClassNotFoundException {
+		while ((s = inGeneral.readLine()) != null) {
+		    StringTokenizer tokenizer = new StringTokenizer(s, "/");				//Tokenizo cada línea por la /
+		    String film = tokenizer.nextToken();									//Me quedo con el primer elemento de cada línea, la película
+		    
+		    
+		    String categories = "";
+			String category = new String();
+			try {
+				Statement statement = (Statement) connection.createStatement();
+
+				// This code only works for PostgreSQL
+				((java.sql.Statement) statement).executeUpdate("drop table if exists films");
+				((java.sql.Statement) statement).executeUpdate("create table films (film text, actor text)");
+
+				for (int i = 0; i < docs.length; i++) {					//Busco en todos los documentos cada una de las películas, si aparece agrego esta categoría
+					in = new In("data/imdb-data/" + docs[i]);
+					String bodyDoc = in.readAll();				    	//Leo todo el documento
+					if(bodyDoc.contains(film)) {						//Si el documento contiene la línea añado la categoría
+						switch (docs[i]) {
+						case "cast.00-06.txt": 
+							category = "Movies release since 2000";
+							break;
+						case "cast.06.txt": 
+							category = "Movies release in 2006";
+							break;
+						case "cast.G.txt": 
+							category = "Movies rated G by MPAA";
+							break;
+						case "cast.PG.txt": 
+							category = "Movies rated PG by MPAA";
+							break;
+						case "cast.PG13.txt": 
+							category = "Movies rated PG13 by MPAA";
+							break;
+						case "cast.mpaa.txt": 
+							category = "Movies rated by MPAA";
+							break;
+						case "cast.action.txt": 
+							category = "Action Movies";
+							break;
+						case "cast.rated.txt": 
+							category = "Popular Movies";
+							break;
+						case "cast.all.txt": 
+							category = "Over 250,000 movies";
+							break;
+						default: 
+							category = "NOT FOUND";
+							break;
+						}
+						categories += category + "<br>";		//Cambiar por concat, Habia ERROR.
+					}
+				in.close();
+				}
+				// Now get film and categories and insert them
+				insert(connection, film, categories);
+			}catch(IllegalArgumentException e) {
+				System.out.println(e);
+				throw new IllegalArgumentException();
+			}
+		}
+	}
+	
+    public static void insert(Connection conn, String film, String categories) {
+    	String sql = "INSERT INTO films(film, categories) VALUES(?,?)";
+
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, film);
+			pstmt.setString(2, categories);
+			pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	    	System.out.println(e.getMessage());
+	    }
+    }
+    
+    public static String select(Connection conn, String table, String film) {
+    	String sql = "SELECT F.categories FROM films F WHERE F.film=?";
+    	String result = new String();
+    	try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, film);
+    		ResultSet rs = pstmt.executeQuery();
+    		while (rs.next()) {
+    		    // read the result set
+    		    result += "film = " + rs.getString("film") + "\n";
+    		    System.out.println("film = "+rs.getString("film") + "\n");
+    		}
+    	}catch (SQLException e) {
+    		System.out.println(e.getMessage());
+    	}
+    	return result;
+    }
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, URISyntaxException {
 		port(getHerokuAssignedPort());
-		staticFileLocation("/public");        
+		staticFileLocation("/public");
+		
+		URI dbUri = new URI(System.getenv("DATABASE_URL"));
+		String username = dbUri.getUserInfo().split(":")[0];
+		String password = dbUri.getUserInfo().split(":")[1];
+		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
+		connection = DriverManager.getConnection(dbUrl, username, password);
 		get("/", (req, res) ->
 		"<form action='/FormularyAInB' method='post'>" +
 			"<div class='button'>Puedes elegir entre las siguientes opciones:<br/><br/>" +
