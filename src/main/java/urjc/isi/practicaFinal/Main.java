@@ -42,7 +42,6 @@ public class Main {
 	
 	//Método que devuelve que actor está en qué peliculas y viceversa
 	public static String AInB(Graph graph, String element) {
-		System.out.println("ENTRA AINB");
 		if (element == null) {
 			throw new NullPointerException("Categorie null");
 		}
@@ -284,6 +283,10 @@ public class Main {
     		ResultSet rs = pstmt.executeQuery();
     		rs.next();
     		result += rs.getString("categories") + "<br/>";
+    		System.out.println("CATEGORIA--->" + rs.getString("categories"));
+    		if (rs.getString("categories").isEmpty()) {
+    			result = "No se han encontrado categorías para la película '" + film + "'";
+    		}
     	}catch (SQLException e) {
     		System.out.println(e.getMessage());
     	}
