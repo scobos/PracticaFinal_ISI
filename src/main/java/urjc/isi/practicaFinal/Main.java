@@ -332,11 +332,12 @@ public class Main {
     		    
     		if ((rs.getString("categories")).isEmpty()){
     			result = "No se han encontrado categorías para la película '" + film + "'";
-    		} else if (result.isEmpty()) {
-    			result = "La película '" + film + "' no se encuentra en nuestra base de datos";
     		}
     	}catch (SQLException e) {
     		System.out.println(e.getMessage());
+    	}
+    	if (result.isEmpty()) {
+    		result = "La película '" + film + "' no se encuentra en nuestra base de datos";
     	}
     	return result;
     }
