@@ -69,7 +69,7 @@ public class Main {
 		String[] docs = {"cast.00-06.2.txt", "cast.06.txt", "cast.action.2.txt",
 						"cast.G.txt", "cast.mpaa.2.txt", "cast.PG.txt",
 						"cast.PG13.txt", "cast.rated.txt"};
-		String categories = "";
+		String categories = new String();
 		String category = new String();
 		In in;
 		try {
@@ -97,7 +97,7 @@ public class Main {
 					default: category = "NOT FOUND";
 					break;
 					}
-					categories += category + "<br>";		//Cambiar por concat, Habia ERROR.
+					categories += category + "<br>";
 				}
 			in.close();
 			}
