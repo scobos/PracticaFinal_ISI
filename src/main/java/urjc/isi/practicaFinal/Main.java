@@ -66,9 +66,9 @@ public class Main {
 			throw new NullPointerException("Movie null");
 		}
 
-		String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
-						"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
-						"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};
+		String[] docs = {"cast.00-06.2.txt", "cast.06.txt", "cast.action.2.txt",
+						"cast.G.txt", "cast.mpaa.2.txt", "cast.PG.txt",
+						"cast.PG13.txt", "cast.rated.txt"};
 		String categories = "";
 		String category = new String();
 		In in;
@@ -78,7 +78,7 @@ public class Main {
 				String bodyDoc = in.readAll();				    	//Leo todo el documento
 				if(bodyDoc.contains(movie)) {						//Si el documento contiene la línea añado la categoría
 					switch (docs[i]) {
-					case "cast.00-06.txt": category = "Movies release since 2000";
+					case "cast.00-06.2.txt": category = "Movies release since 2000";
 					break;
 					case "cast.06.txt": category = "Movies release in 2006";
 					break;
@@ -88,13 +88,11 @@ public class Main {
 					break;
 					case "cast.PG13.txt": category = "Movies rated PG13 by MPAA";
 					break;
-					case "cast.mpaa.txt": category = "Movies rated by MPAA";
+					case "cast.mpaa.2.txt": category = "Movies rated by MPAA";
 					break;
-					case "cast.action.txt": category = "Action Movies";
+					case "cast.action.2.txt": category = "Action Movies";
 					break;
 					case "cast.rated.txt": category = "Popular Movies";
-					break;
-					case "cast.all.txt": category = "Over 250,000 movies";
 					break;
 					default: category = "NOT FOUND";
 					break;
@@ -235,14 +233,7 @@ public class Main {
 	
 	
 	public static String prepareDataBase(Request request, Response response) throws SQLException{
-		String[] docs = {"cast.00-06.2.txt", "cast.06.txt", "cast.action.2.txt",
-				"cast.G.txt", "cast.mpaa.2.txt", "cast.PG.txt",
-				"cast.PG13.txt", "cast.rated.txt"};
-		In in;
-		In inGeneral;
-		inGeneral = new In("data/imdb-data/prueba.txt");
-		String s;
-
+		
 		try {
 			Statement statement = connection.createStatement();
 			
@@ -253,52 +244,16 @@ public class Main {
 			System.out.println(e);
 			throw new IllegalArgumentException();
 		}
-		
+		In inGeneral;
+		inGeneral = new In("data/imdb-data/prueba.txt");
+		String s;
+
 		while ((s = inGeneral.readLine()) != null) {
 		    StringTokenizer tokenizer = new StringTokenizer(s, "/");				//Tokenizo cada línea por la /
 		    String film = tokenizer.nextToken();									//Me quedo con el primer elemento de cada línea, la película
-		    String categories = new String();
-			String category = new String();
-
-				for (int i = 0; i < docs.length; i++) {					//Busco en todos los documentos cada una de las películas, si aparece agrego esta categoría
-					in = new In("data/imdb-data/" + docs[i]);
-					String bodyDoc = in.readAll();				    	//Leo todo el documento
-					if(bodyDoc.contains(film)) {						//Si el documento contiene la línea añado la categoría
-						switch (docs[i]) {
-						case "cast.00-06.2.txt": 
-							category = "Movies release since 2000";
-							break;
-						case "cast.06.txt": 
-							category = "Movies release in 2006";
-							break;
-						case "cast.G.txt": 
-							category = "Movies rated G by MPAA";
-							break;
-						case "cast.PG.txt": 
-							category = "Movies rated PG by MPAA";
-							break;
-						case "cast.PG13.txt": 
-							category = "Movies rated PG13 by MPAA";
-							break;
-						case "cast.mpaa.2.txt":
-							category = "Movies rated by MPAA";
-							break;
-						case "cast.action.2.txt": 
-							category = "Action Movies";
-							break;
-						case "cast.rated.txt": 
-							category = "Popular Movies";
-							break;
-						default: 
-							category = "NOT FOUND";
-							break;
-						}
-						categories += category + "<br/>";		//Cambiar por concat, Habia ERROR.
-					}
-				in.close();
-				}
-				// Now get film and categories and insert them
-				insert(connection, film, categories);
+		    String categories = categoriesOf(film);
+			// Now get film and categories and insert them
+			insert(connection, film, categories);
 		}
 		String exit = "<form action='/' method='post'>" + 
 							"<div class='button'>" +
@@ -329,10 +284,6 @@ public class Main {
     		ResultSet rs = pstmt.executeQuery();
     		rs.next();
     		result += rs.getString("categories") + "<br/>";
-    		    
-    		if ((rs.getString("categories")).isEmpty()){
-    			result = "No se han encontrado categorías para la película '" + film + "'";
-    		}
     	}catch (SQLException e) {
     		System.out.println(e.getMessage());
     	}
