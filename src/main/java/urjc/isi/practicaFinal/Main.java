@@ -236,9 +236,9 @@ public class Main {
 	
 	public static String prepareDataBase(Request request, Response response) throws SQLException{
 		System.out.println("ENTRA PREPAREDATABASE");
-		String[] docs = {"cast.00-06.txt", "cast.06.txt", "cast.action.txt",
-				"cast.G.txt", "cast.mpaa.txt", "cast.PG.txt",
-				"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};
+		String[] docs = {"cast.00-06.2.txt", "cast.06.txt", "cast.action.2.txt",
+				"cast.G.txt", "cast.mpaa.2.txt", "cast.PG.txt",
+				"cast.PG13.txt", "cast.rated.txt"};
 		In in;
 		In inGeneral;
 		inGeneral = new In("data/imdb-data/prueba.txt");
@@ -263,7 +263,7 @@ public class Main {
 					String bodyDoc = in.readAll();				    	//Leo todo el documento
 					if(bodyDoc.contains(film)) {						//Si el documento contiene la línea añado la categoría
 						switch (docs[i]) {
-						case "cast.00-06.txt": 
+						case "cast.00-06.2.txt": 
 							category = "Movies release since 2000";
 							break;
 						case "cast.06.txt": 
@@ -278,17 +278,14 @@ public class Main {
 						case "cast.PG13.txt": 
 							category = "Movies rated PG13 by MPAA";
 							break;
-						case "cast.mpaa.txt": 
+						case "cast.mpaa.2.txt": 
 							category = "Movies rated by MPAA";
 							break;
-						case "cast.action.txt": 
+						case "cast.action.2.txt": 
 							category = "Action Movies";
 							break;
 						case "cast.rated.txt": 
 							category = "Popular Movies";
-							break;
-						case "cast.all.txt": 
-							category = "Over 250,000 movies";
 							break;
 						default: 
 							category = "NOT FOUND";
