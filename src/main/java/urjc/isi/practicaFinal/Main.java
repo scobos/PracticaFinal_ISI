@@ -305,6 +305,7 @@ public class Main {
 				System.out.println(e);
 				throw new IllegalArgumentException();
 			}
+			System.out.println("LA PELÍCULA ES: " + film);
 		}
 		System.out.println("SALE WHILE");
 		return "HECHO";
