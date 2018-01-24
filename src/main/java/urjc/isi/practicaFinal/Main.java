@@ -257,7 +257,7 @@ public class Main {
 		while ((s = inGeneral.readLine()) != null) {
 		    StringTokenizer tokenizer = new StringTokenizer(s, "/");				//Tokenizo cada línea por la /
 		    String film = tokenizer.nextToken();									//Me quedo con el primer elemento de cada línea, la película
-		    String categories = "";
+		    String categories = new String();
 			String category = new String();
 
 				for (int i = 0; i < docs.length; i++) {					//Busco en todos los documentos cada una de las películas, si aparece agrego esta categoría
@@ -280,7 +280,7 @@ public class Main {
 						case "cast.PG13.txt": 
 							category = "Movies rated PG13 by MPAA";
 							break;
-						case "cast.mpaa.2.txt": 
+						case "cast.mpaa.2.txt":
 							category = "Movies rated by MPAA";
 							break;
 						case "cast.action.2.txt": 
@@ -293,7 +293,7 @@ public class Main {
 							category = "NOT FOUND";
 							break;
 						}
-						categories += category + "<br>";		//Cambiar por concat, Habia ERROR.
+						categories += category + "<br/>";		//Cambiar por concat, Habia ERROR.
 					}
 				in.close();
 				}
@@ -329,15 +329,17 @@ public class Main {
     		ResultSet rs = pstmt.executeQuery();
     		while (rs.next()) {
     		    // read the result set
-    		    result += rs.getString("categories") + "<br>";
+    		    result += rs.getString("categories") + "<br/>";
     		}
-    		if (rs.getString("categories").isEmpty()){
+    		System.out.println("CATEGORIA -->  " + rs.getString("categories"));
+    		if ((rs.getString("categories")).isEmpty()){
     			result = "No se han encontrado categorías para la película '" + film + "'";
-    		} else if (result.isEmpty()) {
-    			result = "La película '" + film + "' no se encuentra en nuestra base de datos";
     		}
     	}catch (SQLException e) {
     		System.out.println(e.getMessage());
+    	}
+    	if (result.isEmpty()) {
+    		result = "La película '" + film + "' no se encuentra en nuestra base de datos";
     	}
     	return result;
     }
