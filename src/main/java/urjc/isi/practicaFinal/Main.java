@@ -245,18 +245,22 @@ public class Main {
 		System.out.println("ABRE EL FICHERO CAST.ALL.2.TXT");
 		String s;
 
+		try {
+			Statement statement = connection.createStatement();
+			
+			// This code only works for PostgreSQL
+			statement.executeUpdate("drop table if exists films");
+			statement.executeUpdate("create table films (film text, categories text)");
+		}catch(IllegalArgumentException e) {
+			System.out.println(e);
+			throw new IllegalArgumentException();
+		}
+		
 		while ((s = inGeneral.readLine()) != null) {
 		    StringTokenizer tokenizer = new StringTokenizer(s, "/");				//Tokenizo cada línea por la /
 		    String film = tokenizer.nextToken();									//Me quedo con el primer elemento de cada línea, la película
-		    
 		    String categories = "";
 			String category = new String();
-			try {
-				Statement statement = connection.createStatement();
-
-				// This code only works for PostgreSQL
-				statement.executeUpdate("drop table if exists films");
-				statement.executeUpdate("create table films (film text, categories text)");
 
 				for (int i = 0; i < docs.length; i++) {					//Busco en todos los documentos cada una de las películas, si aparece agrego esta categoría
 					in = new In("data/imdb-data/" + docs[i]);
@@ -297,10 +301,6 @@ public class Main {
 				}
 				// Now get film and categories and insert them
 				insert(connection, film, categories);
-			}catch(IllegalArgumentException e) {
-				System.out.println(e);
-				throw new IllegalArgumentException();
-			}
 			System.out.println("LA PELÍCULA ES: " + film);
 		}
 		System.out.println("SALE WHILE");
