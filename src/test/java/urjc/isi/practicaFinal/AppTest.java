@@ -213,6 +213,16 @@ public class AppTest {
 		Main.doPrepareDataBase(request, response);
 	}
 	
+	
+	@Test()
+	public void In1() {
+		In in = new In(filePath);
+		while(in.hasNextLine()) {
+			in.readLine();
+		}
+		assertEquals(null, in.readLine());
+	}
+	
 	/*@Test()
 	public void select1() {
 		 = mock(String.class);
@@ -221,10 +231,5 @@ public class AppTest {
 		assertEquals(answer, Main.select(film));
 	}*/
 	
-	
-	
-	
-	
-	
-	
+
 }
