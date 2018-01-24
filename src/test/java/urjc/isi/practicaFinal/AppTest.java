@@ -223,13 +223,14 @@ public class AppTest {
 		assertEquals(null, in.readLine());
 	}
 	
-	/*@Test()
-	public void select1() {
-		 = mock(String.class);
+/*	@Test()
+	public void select1() throws ClassNotFoundException, URISyntaxException {
 		String film = "101 Dalmatians (1996)";
+		Main bbdd = mock(Main.class);
 		String answer = "Movies rated G by MPAA<br>Movies rated by MPAA<br>Popular Movies<br><br/>";
-		assertEquals(answer, Main.select(film));
+		when(bbdd.select(film)).thenReturn(answer);
+		assertEquals(answer, bbdd.select(film));
 	}*/
-	
+
 
 }
