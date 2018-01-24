@@ -242,7 +242,7 @@ public class Main {
 				"cast.PG13.txt", "cast.rated.txt", "cast.all.txt"};					//Preparo la lista de documentos donde buscaré las películas
 		In in;
 		In inGeneral;
-		inGeneral = new In("data/imdb-data/all.2.txt");
+		inGeneral = new In("data/imdb-data/cast.all.2.txt");
 		String s;
 
 		while ((s = inGeneral.readLine()) != null) {
