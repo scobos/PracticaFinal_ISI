@@ -331,14 +331,15 @@ public class Main {
     		    // read the result set
     		    result += rs.getString("categories") + "<br>";
     		}
+    		if (rs.getString("categories").isEmpty()){
+    			result = "No se han encontrado categorías para la película '" + film + "'";
+    		} else if (result.isEmpty()) {
+    			result = "La película '" + film + "' no se encuentra en nuestra base de datos";
+    		}
     	}catch (SQLException e) {
     		System.out.println(e.getMessage());
     	}
-    	if (result.isEmpty()){
-    		result += "No se han encontrado categorías para la película seleccionada";
-    	}
     	return result;
-    	
     }
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, URISyntaxException {
@@ -350,8 +351,8 @@ public class Main {
 		String password = dbUri.getUserInfo().split(":")[1];
 		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 		connection = DriverManager.getConnection(dbUrl, username, password);
-		get("/", (req, res) ->
-		"<form action='/upload' method='post'>" + 
+		
+		String menu = "<form action='/upload' method='post'>" + 
 			"<div class='button'>" +
 				"<button type='submit'  class='btn btn-default ribbon'>Cargar base de datos</button>" +
 			"</div>" +
@@ -379,13 +380,16 @@ public class Main {
 				"-Buscar películas de una categoría:<br/>" +
 				"<button type='submit'>Películas de categoría</button>" +
 			"</div>" +
-		"</form>");
+		"</form>";
+		
+		get("/", (req, res) -> menu);
 		get("/upload", Main::prepareDataBase);
 		get("/FormularyAInB", Main::FormularyAinB);
 		get("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
 		get("/FormularyOfCategories", Main::FormularyOfCategories);
 		get("/FormularyCategoriesOf", Main::FormularyCategoriesOf);
 		
+		post("/", (req, res) -> menu);
 		post("/upload", Main::prepareDataBase);
 		post("/FormularyAInB", Main::FormularyAinB);
 		post("/FormularyDistanceBetweenElements", Main::FormularyDistanceBetweenElements);
