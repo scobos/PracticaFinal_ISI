@@ -308,13 +308,14 @@ public class Main {
 		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 		connection = DriverManager.getConnection(dbUrl, username, password);
 		
-		String menu = "<form action='/upload' method='post'>" + 
+		String menu = "<html><body>" +
+		"<form action='/upload' method='post'>" + 
 			"<div class='button'>" +
 				"<button type='submit'  class='btn btn-default ribbon'>Cargar base de datos</button>" +
 			"</div>" +
 		"</form>"+
 		"<form action='/FormularyAInB' method='post'>" +
-			"<div class='button'>Puedes elegir entre las siguientes opciones:<br/><br/>" +
+			"<div class='button'><h3>Puedes elegir entre las siguientes opciones:</h3>" +
 				"-Buscar qué actores salen en una película, o en qué películas sale un actor:<br/>" +
 				"<button type='submit'  class='btn btn-default ribbon'>Actor-Película</button>" +
 			"</div>" +
@@ -336,7 +337,7 @@ public class Main {
 				"-Buscar películas de una categoría:<br/>" +
 				"<button type='submit'>Películas de categoría</button>" +
 			"</div>" +
-		"</form>";
+		"</form></body></html>";
 		
 		get("/", (req, res) -> menu);
 		get("/upload", Main::doPrepareDataBase);
