@@ -359,11 +359,9 @@ public class Main {
 		post("/OfCategories", Main::doOfCategories);
 		post("/CategoriesOf", Main::doCategoriesOf);
 
-
 	}
-//Para la base de datos coger las 9999 peliculas de all.2, buscar con el codigo de 
-	// CategoriesOf las categorias de cada pelicula y añadir un campo de pelicula y otro de categorias.
-	//
+
+	
 	static int getHerokuAssignedPort() {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		if (processBuilder.environment().get("PORT") != null) {
